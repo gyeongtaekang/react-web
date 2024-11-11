@@ -1,0 +1,195 @@
+/* MovieSearch.css */
+
+.movie-search-container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 80px auto 0;
+  padding: 30px;
+}
+
+.dropdown-container {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  gap: 0; /* 요소 간격 제거하여 붙어 보이도록 설정 */
+}
+
+.search-input {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 4px 0 0 4px; /* 왼쪽 상단과 하단만 둥글게 */
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  color: white;
+  height: 40px; /* 버튼 높이와 일치 */
+}
+
+.search-input::placeholder {
+  color: #ffffff; /* 진한 흰색 placeholder */
+}
+
+.search-button {
+  background-color: #888; /* 회색 배경색 */
+  color: white;
+  border: none;
+  padding: 4px 8px;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 0 4px 4px 0; /* 오른쪽 상단과 하단만 둥글게 */
+  height: 40px; /* 검색 입력창과 동일한 높이 */
+  width: 60px; /* 텍스트 크기에 맞춘 너비 */
+  text-align: center;
+}
+
+.search-history {
+  margin-top: 20px;
+}
+
+.search-history h4 {
+  font-size: 16px;
+  color: white;
+  margin-bottom: 10px;
+}
+
+.search-history ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.search-history li {
+  color: #ccc;
+  cursor: pointer;
+  padding: 5px 10px;
+  background-color: #333;
+  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.search-history li:hover span {
+  color: white;
+}
+
+.remove-btn {
+  background: none;
+  color: red;
+  border: none;
+  font-size: 12px;
+  cursor: pointer;
+  margin-left: 5px;
+}
+
+.custom-select {
+  min-width: 120px;
+  position: relative;
+  display: inline-block;
+}
+
+.select-selected {
+  background-color: black;
+  color: white;
+  padding: 10px;
+  border: 1px solid #fff;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.select-selected:after {
+  content: "\25BC";
+  position: absolute;
+  right: 10px;
+  top: 14px;
+}
+
+.select-arrow-active:after {
+  content: "\25B2";
+}
+
+.select-items {
+  display: block;
+  position: absolute;
+  background-color: #333;
+  border: 1px solid #fff;
+  z-index: 99;
+  top: 100%;
+  left: 0;
+  right: 0;
+}
+
+.select-items div {
+  color: white;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.select-items div:hover {
+  background-color: #575757;
+}
+
+.clear-options {
+  min-width: 120px;
+  padding: 10px;
+  background-color: black;
+  color: white;
+  border: 1px solid #fff;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+.clear-options:hover {
+  background-color: #333;
+}
+
+.movie-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.movie-card {
+  background-color: #222;
+  border-radius: 8px;
+  padding: 5px;
+  text-align: center;
+}
+
+.movie-poster {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  border-radius: 4px;
+}
+
+.movie-info {
+  margin-top: 10px;
+  color: white;
+}
+
+.error-message {
+  color: red;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.loading-message {
+  font-size: 150px;
+  text-align: center;
+  color: gray;
+}
+
+.content-search .movie-grid {
+  display: none;
+}

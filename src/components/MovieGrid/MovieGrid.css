@@ -1,0 +1,121 @@
+.wishlist-indicator {
+  position: absolute;
+  top: 0;
+  right: 10px;
+  font-size: 20px;
+  background-color: rgba(229, 9, 20, 0.5);
+  box-shadow: 0 0 5px rgba(229, 9, 20, 0.7);
+}
+
+.movie-grid {
+  width: 100%;
+  height: calc(100vh - 200px);
+  margin-bottom: 40px;
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding-top: 80px; /* 상단 여백을 100px로 설정하여 첫 이미지가 100px 떨어지게 함 */
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* 더 큰 카드 배열 */
+  gap: 20px;
+  justify-items: center;
+}
+
+.movie-rank-container {
+  position: relative;
+  text-align: center;
+}
+
+.movie-rank {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  font-size: 2em;
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: bold;
+  z-index: 1;
+  text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.7);
+}
+
+.movie-card {
+  width: 100%; /* 그리드 셀 크기에 맞게 채워지도록 설정 */
+  max-width: 250px; /* 카드의 최대 너비를 확장하여 이미지가 더 크게 표시되도록 */
+  transition: transform 0.3s;
+  position: relative;
+}
+
+.movie-card:hover {
+  transform: scale(1.05);
+}
+
+.movie-card img {
+  width: 100%; /* 그리드 셀 크기에 맞게 이미지가 꽉 차도록 설정 */
+  aspect-ratio: 2 / 3; /* 영화 포스터 비율로 변경 */
+  border-radius: 8px; /* 더 둥글게 설정 */
+  object-fit: cover;
+}
+
+.movie-title {
+  margin-top: 5px;
+  text-align: center;
+  font-size: 14px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.load-more {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.loading-spinner,
+.end-message {
+  font-size: 1.2em;
+  color: #888;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.pagination button {
+  background-color: #333;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  margin: 0 10px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.pagination button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+  .movie-grid {
+    height: calc(90svh - 200px);
+  }
+
+  .movie-card {
+    width: 150px; /* 모바일에서 카드 크기를 확대 */
+  }
+
+  .movie-title {
+    font-size: 12px;
+  }
+
+  .pagination button {
+    padding: 8px 12px;
+    font-size: 14px;
+  }
+}

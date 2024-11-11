@@ -1,0 +1,344 @@
+:root {
+  --container-start-x: -50%;
+  --container-end-x: -90%;
+  --container-start-y: -58%;
+  --container-end-y: -42%;
+  --container-start-color: #B0B0B0; /* 연한 회색 */
+  --container-end-color: #3F3F3F; /* 어두운 회색 */
+}
+
+.bg-image {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url('https://images.unsplash.com/photo-1507041957456-9c397ce39c97?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+  background-size: cover;
+  background-position: center;
+}
+
+.bg-image::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(63, 63, 63, 0.90); /* 어두운 회색으로 변경 */
+}
+
+a {
+  text-decoration:none;
+  margin:0;
+  padding: 0;
+}
+
+.container {
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  perspective: 1000px; /* 3D 효과를 위한 원근감 설정 */
+}
+
+#phone {
+  width: 100%;
+  max-width: 400px;
+  aspect-ratio: 3 / 5;
+  border-radius: 15px;
+  text-align: center;
+  position: relative; /* 부모 요소에 맞게 위치 */
+  transform: none; /* 중앙 위치 조정 제거 */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.card {
+  border-radius: 15px;
+  width: 100%;
+  position: absolute;
+  background-color: #e0e0e0; /* 연한 회색으로 변경 */
+  padding: 20px 30px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  transition: all 0.4s 0.1s ease;
+  transform: translateY(-50%);
+  top: 50%;
+  left: 0;
+}
+
+@media (max-height: 600px) {
+  #phone {
+    transform: translate(-50%, -50%) scale(0.5); /* Scale down on small screens */
+  }
+}
+
+@media (max-height: 400px) {
+  #phone {
+    transform: translate(-50%, -50%) scale(0.3); /* Further scale down */
+  }
+}
+
+#content-wrapper {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  position:relative;
+  transform-style: preserve-3d; /* 3D 전환을 위한 설정 */
+  transition: transform 1s; /* 전환 애니메이션 */
+}
+
+input {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #000;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  width: 100%;
+  height: 2.5rem;
+  padding: 0;
+  margin: 0;
+}
+
+.read-text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-indent: 10px; /* 원하는 들여쓰기 크기로 조정하세요 */
+  color: #3f3f3f !important; /* 어두운 회색 */
+  font-weight: 900;
+}
+
+h1 {
+  font-size: 24px;
+  font-weight: 800;
+  text-align: center;
+  margin-top: 0;
+  color: #3f3f3f; /* 어두운 회색 */
+}
+
+button {
+  display:block;
+  border-radius:50px;
+  border:none;
+  width:100%;
+  background-color: #7f7f7f; /* 중간 회색으로 변경 */
+  color:#fff;
+  padding:17px;
+  text-transform:uppercase;
+  letter-spacing:2px;
+  box-shadow: 0px 10px 30px rgba(63, 63, 63, 0.3);
+  transition: all 0.2s ease;
+}
+
+button:hover {
+  box-shadow: 0px 2px 10px rgba(63, 63, 63, 0.4)
+}
+
+.input {
+  position: relative;
+  margin-top: 1.5rem;
+}
+
+.line-active {
+  border-bottom:1px solid #7f7f7f !important; /* 중간 회색으로 변경 */
+  box-shadow: 0px 1px 0px #7f7f7f !important;
+}
+
+.input input {
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid #9e9e9e;
+  border-radius: 0;
+  outline: none;
+  height: 2.5rem;
+  width: 100%;
+  font-size: 1rem;
+  padding: 0;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  box-sizing: content-box;
+  transition: all 0.3s ease;
+}
+
+.input label {
+  color: #9e9e9e;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  height: 100%;
+  font-size: 1rem;
+  cursor: text;
+  transition: all 0.2s ease-out;
+  transform-origin: 0% 100%;
+  transform: translateY(0);
+  pointer-events: none;
+}
+
+.input.active label {
+  transform: translateY(-1.5rem);
+  font-size: 0.8rem;
+  color: #7f7f7f;
+}
+
+.label-active {
+  transform: translateY(-14px) scale(0.8) !important;
+  transform-origin: 0 0 !important;
+}
+
+.label-blue {
+  color: #7f7f7f !important; /* 중간 회색으로 변경 */
+}
+
+[type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+[type="checkbox"]+label {
+  position: relative;
+  padding-left: 25px;
+  cursor: pointer;
+  display: inline-block;
+  height: 25px;
+  line-height: 22px;
+  font-size: 1rem;
+  user-select: none;
+}
+
+[type="checkbox"]+label:before, [type="checkbox"]:not(.filled-in)+label:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 18px;
+  height: 18px;
+  z-index: 0;
+  border: 2px solid #5a5a5a;
+  border-radius: 3px;
+  margin-top: 2px;
+  transition: .2s;
+}
+
+[type="checkbox"]:not(.filled-in)+label:after {
+  border: 0;
+  transform: scale(0);
+}
+
+[type="checkbox"]:checked+label:before {
+  top: -4px;
+  left: -5px;
+  width: 12px;
+  height: 22px;
+  border-top: 2px solid transparent;
+  border-left: 2px solid transparent;
+  border-right: 2px solid #7f7f7f; /* 중간 회색으로 변경 */
+  border-bottom: 2px solid #7f7f7f;
+  transform: rotate(40deg);
+  backface-visibility: hidden;
+  transform-origin: 100% 100%;
+  border-radius: 1px;
+}
+
+.checkbox {
+  margin-top:2rem;
+  display:block;
+  margin-bottom:2rem;
+}
+
+.remember {
+  float:left;
+}
+
+.forgot {
+  float: right;
+}
+
+.forgot a {
+  text-decoration: none;
+  color: #ffffff; /* 글씨 색을 하얀색으로 유지 */
+  font-weight: 600; /* 텍스트 굵기를 조금 줄임 */
+  background: transparent; /* 배경색을 투명하게 설정 */
+  border: none; /* 테두리 제거 */
+  padding: 0; /* 패딩을 없애서 버튼 느낌 제거 */
+  transition: all 0.2s ease;
+}
+
+.card form {
+  transform:translateX(0px);
+  transition: all 0.3s 0.4s ease;
+}
+
+.forgot a:hover {
+  color: #272727; /* 호버 시 어두운 회색으로 변경 */
+  text-decoration: underline;
+}
+
+#login {
+  z-index:2;
+  top: 5svh;
+  transform: rotateY(0deg); /* 로그인 카드가 앞면 */
+  backface-visibility: hidden;
+  transition: transform 1s ease;
+}
+
+#register {
+  z-index:1;
+  top: 5svh;
+  transform: rotateY(180deg); /* 회원가입 카드가 뒷면 */
+  backface-visibility: hidden;
+  transition: transform 1s ease;
+}
+
+#content-wrapper.hidden #login {
+  transform: rotateY(180deg); /* 로그인 폼 회전 */
+}
+
+#content-wrapper.hidden #register {
+  transform: rotateY(0deg); /* 회원가입 폼 회전 */
+}
+
+.account-check, .already-account-check {
+  width: auto;
+  text-align: center;
+  position: relative;
+  bottom: -10px; /* 버튼이 가려지지 않도록 조정 */
+  left: 50%;
+  transform: translateX(-50%);
+  text-decoration: none;
+  color: #ffffff; /* 글씨 색을 하얀색으로 유지 */
+  font-weight: 600;
+  padding: 0; /* 패딩을 제거하여 버튼 느낌을 없앰 */
+  background: transparent; /* 배경색을 투명하게 만듬 */
+  border: none; /* 버튼 테두리를 제거하여 텍스트 느낌만 남김 */
+  transition: all 0.2s ease;
+  z-index: 3;
+}
+
+.hidden .account-check,
+.hidden .already-account-check {
+  opacity: 1;
+  visibility: visible;
+  z-index: 2;
+  transition: all 0.2s ease;
+}
+
+.account-check:hover, .already-account-check:hover {
+  color: #272727; /* 호버 시 더 어두운 회색으로 변경 */
+  text-decoration: underline;
+}
+
+.active > label {
+  color: rgba(0, 0, 0, 0.8);
+  transition: color 0.3s ease;
+}

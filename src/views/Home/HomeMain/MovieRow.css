@@ -1,0 +1,59 @@
+/* src/components/MovieRow/MovieRow.css */
+.movie-row {
+    padding: 20px 0;
+  }
+  
+  .movie-row__movies {
+    display: flex;
+    overflow-x: scroll;
+    gap: 10px;
+  }
+  
+  .movie-card {
+    position: relative;
+    width: 200px;
+    cursor: pointer;
+  }
+  
+  .movie-poster {
+    width: 100%;
+    border-radius: 4px;
+    transition: transform 0.3s;
+  }
+  
+  /* 영화 포스터에 호버 시 확대 효과 추가 */
+  .movie-card:hover .movie-poster {
+    transform: scale(1.1);
+  }
+  
+  /* 영화 정보 오버레이 스타일 */
+  .movie-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    opacity: 0;
+    transition: opacity 0.3s;
+    padding: 10px;
+    border-radius: 4px;
+    overflow-y: auto;
+  }
+  
+  /* 오버레이가 보이도록 설정 */
+  .movie-card:hover .movie-overlay {
+    opacity: 1;
+  }
+  
+  .movie-overlay h3 {
+    margin: 0;
+    font-size: 18px;
+  }
+  
+  .movie-overlay p {
+    font-size: 14px;
+    margin-top: 5px;
+  }
+  
