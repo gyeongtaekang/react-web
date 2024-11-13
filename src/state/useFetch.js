@@ -2,7 +2,7 @@
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 
-const API_KEY = '01bede4653551df3f6f5e17074771100'; // API 키 설정
+const API_KEY = process.env.REACT_APP_TMDB_API_KEY; // API 키 설정
 
 /**
  * useFetch 훅 (react-query v5 호환)

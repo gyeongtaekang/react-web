@@ -1,5 +1,5 @@
 // src/components/SignIn/SignIn.js
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useAuth from '../../state/useAuth';
 import { toast, ToastContainer } from 'react-toastify';
@@ -21,6 +21,7 @@ function SignIn() {
   const [rememberMe, setRememberMe] = useState(false);
   const [acceptTerms, setAcceptTerms] = useState(false);
 
+  // 로그인 폼의 유효성 검사
   const isLoginFormValid = email && password;
   const isRegisterFormValid =
     registerEmail &&
@@ -28,6 +29,19 @@ function SignIn() {
     confirmPassword &&
     registerPassword === confirmPassword &&
     acceptTerms;
+
+  // 페이지 로드 시 로컬 스토리지에 저장된 이메일과 비밀번호 불러오기
+  useEffect(() => {
+    const savedEmail = localStorage.getItem('savedEmail');
+    const savedPassword = localStorage.getItem('savedPassword');
+    const savedRememberMe = localStorage.getItem('rememberMe') === 'true';
+
+    if (savedEmail && savedPassword && savedRememberMe) {
+      setEmail(savedEmail);
+      setPassword(savedPassword);
+      setRememberMe(true);
+    }
+  }, []);
 
   const toggleCard = () => {
     setIsLoginVisible(!isLoginVisible);
@@ -43,16 +57,26 @@ function SignIn() {
       const response = await handleLogin(email, password); 
       console.log("Full response:", response);
 
-      // 응답에서 userId와 userEmail을 추출하여 각각 저장
       const userId = response?.userId || response?.data?.userId;
-      const userEmail = email;  // email 변수에 이미 사용자 이메일이 저장되어 있으므로 이를 사용
+      const userEmail = email;
 
       if (userId) {
         localStorage.setItem('userId', userId); 
       }
-      
+
       if (userEmail) {
         localStorage.setItem('userEmail', userEmail); 
+      }
+
+      // rememberMe가 true인 경우 이메일과 비밀번호를 저장
+      if (rememberMe) {
+        localStorage.setItem('savedEmail', email);
+        localStorage.setItem('savedPassword', password);
+        localStorage.setItem('rememberMe', true);
+      } else {
+        localStorage.removeItem('savedEmail');
+        localStorage.removeItem('savedPassword');
+        localStorage.removeItem('rememberMe');
       }
 
       toast.success('로그인에 성공했습니다!');

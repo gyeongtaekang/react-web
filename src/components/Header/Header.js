@@ -7,6 +7,8 @@ import './Header.css';
 
 function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isScrollUp, setIsScrollUp] = useState(false);
+  const [lastScrollY, setLastScrollY] = useState(0);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [userId, setUserId] = useState(null);
   const [userEmail, setUserEmail] = useState(null);
@@ -15,7 +17,15 @@ function Header() {
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
+      
+      if (window.scrollY > lastScrollY) {
+        setIsScrollUp(true);
+      } else {
+        setIsScrollUp(false);
+      }
+      setLastScrollY(window.scrollY);
     };
+
     window.addEventListener('scroll', handleScroll);
 
     const storedUserId = localStorage.getItem('userId');
@@ -29,7 +39,7 @@ function Header() {
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, []);
+  }, [lastScrollY]);
 
   const removeKey = () => {
     localStorage.removeItem('userId');
@@ -45,7 +55,7 @@ function Header() {
 
   return (
     <div id="container">
-      <header className={`app-header ${isScrolled ? 'scrolled' : ''}`}>
+      <header className={`app-header ${isScrolled ? 'scrolled' : ''} ${isScrollUp ? 'scroll-up' : ''}`}>
         <div className="header-left">
           <div className="logo">
             <Link to="/">
@@ -65,7 +75,6 @@ function Header() {
           <button className="icon-button" onClick={removeKey}>
             <FontAwesomeIcon icon={faUser} />
           </button>
-          {userId && <span className="user-id">{userId}</span>}
           {userEmail && <span className="user-email">{userEmail}</span>}
           <button className="icon-button mobile-menu-button" onClick={toggleMobileMenu}>
             <FontAwesomeIcon icon={faBars} />

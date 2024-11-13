@@ -1,143 +1,53 @@
-// src/components/MovieWishlist/MovieWishlist.js
-import React, { useState, useEffect, useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { toggleWishlist } from '../../store/slices/wishlistSlice';
-import './MovieWishlist.css';
 
 function MovieWishlist() {
-  const [visibleWishlistMovies, setVisibleWishlistMovies] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [rowSize, setRowSize] = useState(4);
-  const [moviesPerPage, setMoviesPerPage] = useState(20);
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
-  const gridContainerRef = useRef(null);
-
-  const dispatch = useDispatch();
   const wishlist = useSelector((state) => state.wishlist.wishlist);
+  const dispatch = useDispatch();
+
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    loadWishlist();
-    calculateLayout();
-    window.addEventListener('resize', handleResize);
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    if (wishlist.length > 0) {
+      setLoading(false);
+    }
   }, [wishlist]);
 
-  const loadWishlist = () => {
-    // Redux를 사용하므로 `wishlist` 상태가 이미 최신 상태입니다.
-    updateVisibleMovies(wishlist, 1, rowSize, moviesPerPage);
-  };
-
   const getImageUrl = (path) => {
-    return path ? `https://image.tmdb.org/t/p/w300${path}` : '/placeholder-image.jpg';
-  };
-
-  const calculateLayout = () => {
-    if (gridContainerRef.current) {
-      const containerWidth = gridContainerRef.current.offsetWidth;
-      const containerHeight = window.innerHeight - gridContainerRef.current.offsetTop;
-      const movieCardWidth = isMobile ? 90 : 220;
-      const movieCardHeight = isMobile ? 150 : 330;
-      const horizontalGap = isMobile ? 10 : 15;
-      const verticalGap = -10;
-
-      const newRowSize = Math.floor(containerWidth / (movieCardWidth + horizontalGap));
-      const maxRows = Math.floor(containerHeight / (movieCardHeight + verticalGap));
-      const newMoviesPerPage = newRowSize * maxRows;
-
-      setRowSize(newRowSize);
-      setMoviesPerPage(newMoviesPerPage);
-
-      updateVisibleMovies(wishlist, currentPage, newRowSize, newMoviesPerPage);
-    }
-  };
-
-  const updateVisibleMovies = (
-    movies = [],
-    page = currentPage,
-    newRowSize = rowSize,
-    newMoviesPerPage = moviesPerPage
-  ) => {
-    const startIndex = (page - 1) * newMoviesPerPage;
-    const endIndex = startIndex + newMoviesPerPage;
-    const paginatedMovies = movies.slice(startIndex, endIndex);
-
-    const groupedMovies = paginatedMovies.reduce((resultArray, item, index) => {
-      const groupIndex = Math.floor(index / newRowSize);
-      if (!resultArray[groupIndex]) {
-        resultArray[groupIndex] = [];
-      }
-      resultArray[groupIndex].push(item);
-      return resultArray;
-    }, []);
-    setVisibleWishlistMovies(groupedMovies);
-  };
-
-  const totalPages = Math.ceil(wishlist.length / moviesPerPage);
-
-  const nextPage = () => {
-    if (currentPage < totalPages) {
-      const newPage = currentPage + 1;
-      setCurrentPage(newPage);
-      updateVisibleMovies(wishlist, newPage, rowSize, moviesPerPage);
-    }
-  };
-
-  const prevPage = () => {
-    if (currentPage > 1) {
-      const newPage = currentPage - 1;
-      setCurrentPage(newPage);
-      updateVisibleMovies(wishlist, newPage, rowSize, moviesPerPage);
-    }
-  };
-
-  const handleResize = () => {
-    setIsMobile(window.innerWidth <= 768);
-    calculateLayout();
+    return path ? `https://image.tmdb.org/t/p/w500${path}` : '/placeholder-image.jpg';
   };
 
   const toggleWishlistHandler = (movie) => {
     dispatch(toggleWishlist(movie));
-    // Redux가 상태를 업데이트하므로, `useEffect`가 `wishlist` 상태 변경을 감지하여 자동으로 `updateVisibleMovies`가 호출됩니다.
   };
 
   return (
-    <div className="movie-grid" ref={gridContainerRef}>
-      <div className={`grid-container grid`}>
-        {visibleWishlistMovies.map((movieGroup, i) => (
-          <div key={i} className={`movie-row ${movieGroup.length === rowSize ? 'full' : ''}`}>
-            {movieGroup.map((movie) => (
-              <div
-                key={movie.id}
-                className="movie-card"
-                onClick={() => toggleWishlistHandler(movie)}
-              >
-                <img src={getImageUrl(movie.poster_path)} alt={movie.title} />
-                <div className="movie-title">{movie.title}</div>
-                {movie.id && (
-                  <div className="wishlist-indicator">❤️</div>
-                )}
+    <div className="bg-gray-800 p-4 min-h-screen">
+      {loading ? (
+        <div className="text-center text-lg text-gray-400 mt-8">로딩 중...</div>
+      ) : wishlist.length === 0 ? (
+        <div className="text-center text-lg text-gray-400 mt-8">위시리스트가 비어 있습니다.</div>
+      ) : (
+        <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 p-4">
+          {wishlist.map((movie) => (
+            <div
+              key={movie.id}
+              className="relative bg-gray-700 rounded-lg overflow-hidden shadow-lg transform hover:scale-105 transition-transform duration-300 cursor-pointer"
+              onClick={() => toggleWishlistHandler(movie)}
+              style={{ width: '320px', height: '480px' }} // 카드 크기 고정
+            >
+              <img
+                src={getImageUrl(movie.poster_path)}
+                alt={movie.title}
+                className="w-full h-full object-cover" // 카드 안에 이미지 꽉 채우기
+              />
+              <div className="absolute top-2 right-2 bg-red-600 text-white text-lg p-2 rounded-full">
+                ❤️
               </div>
-            ))}
-          </div>
-        ))}
-      </div>
-      {wishlist.length === 0 && (
-        <div className="empty-wishlist">위시리스트가 비어 있습니다.</div>
-      )}
-      {totalPages > 1 && (
-        <div className="pagination">
-          <button onClick={prevPage} disabled={currentPage === 1}>
-            &lt; 이전
-          </button>
-          <span>
-            {currentPage} / {totalPages}
-          </span>
-          <button onClick={nextPage} disabled={currentPage === totalPages}>
-            다음 &gt;
-          </button>
+              <div className="p-4 text-white text-center font-semibold truncate">{movie.title}</div>
+            </div>
+          ))}
         </div>
       )}
     </div>

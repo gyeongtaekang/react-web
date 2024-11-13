@@ -5,8 +5,11 @@
   --container-end-y: -42%;
   --container-start-color: #B0B0B0; /* 연한 회색 */
   --container-end-color: #3F3F3F; /* 어두운 회색 */
+  --button-color: #2C5F2D;
+  
 }
 
+/* 배경 이미지 스타일 */
 .bg-image {
   position: fixed;
   top: 0;
@@ -25,15 +28,16 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(63, 63, 63, 0.90); /* 어두운 회색으로 변경 */
+  background-color: rgba(63, 63, 63, 0.90); /* 어두운 회색 */
 }
 
 a {
-  text-decoration:none;
-  margin:0;
+  text-decoration: none;
+  margin: 0;
   padding: 0;
 }
 
+/* 전체 화면 컨테이너 */
 .container {
   height: 100vh;
   width: 100vw;
@@ -45,7 +49,7 @@ a {
   display: flex;
   justify-content: center;
   align-items: center;
-  perspective: 1000px; /* 3D 효과를 위한 원근감 설정 */
+  perspective: 1000px; /* 3D 효과 */
 }
 
 #phone {
@@ -54,8 +58,7 @@ a {
   aspect-ratio: 3 / 5;
   border-radius: 15px;
   text-align: center;
-  position: relative; /* 부모 요소에 맞게 위치 */
-  transform: none; /* 중앙 위치 조정 제거 */
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -65,7 +68,7 @@ a {
   border-radius: 15px;
   width: 100%;
   position: absolute;
-  background-color: #e0e0e0; /* 연한 회색으로 변경 */
+  background-color: #e0e0e0; /* 연한 회색 */
   padding: 20px 30px;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
   transition: all 0.4s 0.1s ease;
@@ -76,13 +79,13 @@ a {
 
 @media (max-height: 600px) {
   #phone {
-    transform: translate(-50%, -50%) scale(0.5); /* Scale down on small screens */
+    transform: translate(-50%, -50%) scale(0.5);
   }
 }
 
 @media (max-height: 400px) {
   #phone {
-    transform: translate(-50%, -50%) scale(0.3); /* Further scale down */
+    transform: translate(-50%, -50%) scale(0.3);
   }
 }
 
@@ -91,9 +94,9 @@ a {
   height: 100%;
   margin: 0;
   padding: 0;
-  position:relative;
-  transform-style: preserve-3d; /* 3D 전환을 위한 설정 */
-  transition: transform 1s; /* 전환 애니메이션 */
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 1s;
 }
 
 input {
@@ -113,8 +116,8 @@ input {
   display: flex;
   align-items: center;
   justify-content: center;
-  text-indent: 10px; /* 원하는 들여쓰기 크기로 조정하세요 */
-  color: #3f3f3f !important; /* 어두운 회색 */
+  text-indent: 10px;
+  color: #3f3f3f !important;
   font-weight: 900;
 }
 
@@ -123,25 +126,25 @@ h1 {
   font-weight: 800;
   text-align: center;
   margin-top: 0;
-  color: #3f3f3f; /* 어두운 회색 */
+  color: #3f3f3f;
 }
 
 button {
-  display:block;
-  border-radius:50px;
-  border:none;
-  width:100%;
-  background-color: #7f7f7f; /* 중간 회색으로 변경 */
-  color:#fff;
-  padding:17px;
-  text-transform:uppercase;
-  letter-spacing:2px;
+  display: block;
+  border-radius: 50px;
+  border: none;
+  width: 100%;
+  background-color: #7f7f7f; /* 중간 회색 */
+  color: #fff;
+  padding: 17px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
   box-shadow: 0px 10px 30px rgba(63, 63, 63, 0.3);
   transition: all 0.2s ease;
 }
 
 button:hover {
-  box-shadow: 0px 2px 10px rgba(63, 63, 63, 0.4)
+  box-shadow: 0px 2px 10px rgba(63, 63, 63, 0.4);
 }
 
 .input {
@@ -150,7 +153,7 @@ button:hover {
 }
 
 .line-active {
-  border-bottom:1px solid #7f7f7f !important; /* 중간 회색으로 변경 */
+  border-bottom: 1px solid #7f7f7f !important;
   box-shadow: 0px 1px 0px #7f7f7f !important;
 }
 
@@ -164,9 +167,6 @@ button:hover {
   width: 100%;
   font-size: 1rem;
   padding: 0;
-  -webkit-box-shadow: none;
-  box-shadow: none;
-  box-sizing: content-box;
   transition: all 0.3s ease;
 }
 
@@ -196,7 +196,7 @@ button:hover {
 }
 
 .label-blue {
-  color: #7f7f7f !important; /* 중간 회색으로 변경 */
+  color: #7f7f7f !important;
 }
 
 [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
@@ -242,7 +242,7 @@ button:hover {
   height: 22px;
   border-top: 2px solid transparent;
   border-left: 2px solid transparent;
-  border-right: 2px solid #7f7f7f; /* 중간 회색으로 변경 */
+  border-right: 2px solid #7f7f7f;
   border-bottom: 2px solid #7f7f7f;
   transform: rotate(40deg);
   backface-visibility: hidden;
@@ -251,13 +251,13 @@ button:hover {
 }
 
 .checkbox {
-  margin-top:2rem;
-  display:block;
-  margin-bottom:2rem;
+  margin-top: 2rem;
+  display: block;
+  margin-bottom: 2rem;
 }
 
 .remember {
-  float:left;
+  float: left;
 }
 
 .forgot {
@@ -266,61 +266,61 @@ button:hover {
 
 .forgot a {
   text-decoration: none;
-  color: #ffffff; /* 글씨 색을 하얀색으로 유지 */
-  font-weight: 600; /* 텍스트 굵기를 조금 줄임 */
-  background: transparent; /* 배경색을 투명하게 설정 */
-  border: none; /* 테두리 제거 */
-  padding: 0; /* 패딩을 없애서 버튼 느낌 제거 */
+  color: #ffffff;
+  font-weight: 600;
+  background: transparent;
+  border: none;
+  padding: 0;
   transition: all 0.2s ease;
 }
 
 .card form {
-  transform:translateX(0px);
+  transform: translateX(0px);
   transition: all 0.3s 0.4s ease;
 }
 
 .forgot a:hover {
-  color: #272727; /* 호버 시 어두운 회색으로 변경 */
+  color: #272727;
   text-decoration: underline;
 }
 
 #login {
-  z-index:2;
+  z-index: 2;
   top: 5svh;
-  transform: rotateY(0deg); /* 로그인 카드가 앞면 */
+  transform: rotateY(0deg);
   backface-visibility: hidden;
   transition: transform 1s ease;
 }
 
 #register {
-  z-index:1;
+  z-index: 1;
   top: 5svh;
-  transform: rotateY(180deg); /* 회원가입 카드가 뒷면 */
+  transform: rotateY(180deg);
   backface-visibility: hidden;
   transition: transform 1s ease;
 }
 
 #content-wrapper.hidden #login {
-  transform: rotateY(180deg); /* 로그인 폼 회전 */
+  transform: rotateY(180deg);
 }
 
 #content-wrapper.hidden #register {
-  transform: rotateY(0deg); /* 회원가입 폼 회전 */
+  transform: rotateY(0deg);
 }
 
 .account-check, .already-account-check {
   width: auto;
   text-align: center;
   position: relative;
-  bottom: -10px; /* 버튼이 가려지지 않도록 조정 */
+  bottom: -10px;
   left: 50%;
   transform: translateX(-50%);
   text-decoration: none;
-  color: #ffffff; /* 글씨 색을 하얀색으로 유지 */
+  color: #ffffff;
   font-weight: 600;
-  padding: 0; /* 패딩을 제거하여 버튼 느낌을 없앰 */
-  background: transparent; /* 배경색을 투명하게 만듬 */
-  border: none; /* 버튼 테두리를 제거하여 텍스트 느낌만 남김 */
+  padding: 0;
+  background: transparent;
+  border: none;
   transition: all 0.2s ease;
   z-index: 3;
 }
@@ -334,7 +334,7 @@ button:hover {
 }
 
 .account-check:hover, .already-account-check:hover {
-  color: #272727; /* 호버 시 더 어두운 회색으로 변경 */
+  color: #272727;
   text-decoration: underline;
 }
 

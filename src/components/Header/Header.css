@@ -6,7 +6,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 25px 4%;
-  background-color: #F2F3F5; /* 페일 그레이로 변경 */
+  background-color: #F2F3F5;
   backdrop-filter: blur(10px);
   position: fixed;
   top: 0;
@@ -15,12 +15,28 @@
   z-index: 1000;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  animation: slideDown 0.5s ease-out;
 }
 
-.app-header:hover,
 .app-header.scrolled {
-  background-color: #E0E0E0; /* 스크롤 시 약간 더 짙은 회색 */
+  background-color: #E0E0E0;
   box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+}
+
+.app-header.scroll-up {
+  transform: translateY(-100%);
+  transition: transform 0.3s ease;
+}
+
+@keyframes slideDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .header-left,
@@ -30,7 +46,7 @@
 }
 
 .logo {
-  height: 60px; /* 로고 크기 조정 */
+  height: 60px;
   margin-right: 35px;
   display: flex;
   align-items: center;
@@ -39,7 +55,7 @@
 .app-header .logo svg {
   width: 60px;
   height: 60px;
-  fill: #D81B60; /* 로고 색상 변경 */
+  fill: #D81B60;
 }
 
 .nav-links ul {
@@ -54,8 +70,8 @@
 }
 
 .nav-links a {
-  color: #333; /* 텍스트 색상 다크 그레이 */
-  background-color: rgba(255, 255, 255, 0.8); /* 반투명한 흰색 배경 */
+  color: #333;
+  background-color: rgba(255, 255, 255, 0.8);
   padding: 10px 20px;
   border-radius: 8px;
   text-decoration: none;
@@ -67,30 +83,34 @@
 }
 
 .nav-links a:hover {
-  background-color: #D81B60; /* 포인트 컬러 */
+  background-color: #D81B60;
   color: #fff;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
 .icon-button {
   background: none;
-  border: none;
-  color: #333;
+  border: 3px solid #5674a4; /* 테두리 추가 */
+  color: #5674a4;
   font-size: 1.75rem;
   margin-left: 30px;
   cursor: pointer;
-  transition: color 0.3s ease, transform 0.3s ease;
+  border-radius: 50%; /* 둥근 테두리 */
+  padding: 8px; /* 테두리 안쪽 여백 추가 */
+  transition: color 0.3s ease, transform 0.3s ease, border-color 0.3s ease;
 }
 
 .icon-button:hover {
   color: #D81B60;
+  border-color: #D81B60; /* 마우스 오버 시 테두리 색상 변경 */
   transform: scale(1.1);
 }
+
 
 .user-id {
   margin-left: 10px;
   font-size: 1rem;
-  color: #333; /* 다크 그레이 색상 */
+  color: #333;
   font-weight: 500;
 }
 
@@ -105,7 +125,7 @@
   right: -100%;
   width: 70%;
   height: 100%;
-  background-color: #F2F3F5; /* 모바일 메뉴 배경을 페일 그레이로 변경 */
+  background-color: #F2F3F5;
   backdrop-filter: blur(8px);
   z-index: 1001;
   transition: right 0.3s ease;
@@ -114,6 +134,16 @@
 
 .mobile-nav.open {
   right: 0;
+  animation: slideIn 0.5s ease;
+}
+
+@keyframes slideIn {
+  0% {
+    right: -100%;
+  }
+  100% {
+    right: 0;
+  }
 }
 
 .mobile-nav ul {
@@ -159,6 +189,23 @@
   color: #D81B60;
 }
 
+/* 반응형 설정 */
+@media (max-width: 1024px) {
+  .logo img {
+    width: 80px;
+    height: 80px;
+  }
+  
+  .nav-links a {
+    font-size: 1rem;
+    padding: 8px 15px;
+  }
+  
+  .icon-button {
+    font-size: 1.5rem;
+  }
+}
+
 @media (max-width: 768px) {
   .desktop-nav {
     display: none;
@@ -186,7 +233,7 @@
 }
 
 .banner {
-  margin-top: 80px; /* 헤더 높이만큼 상단 마진 추가 */
+  margin-top: 80px;
   height: 60vh;
   max-width: 95vw;
   background-size: cover;
@@ -197,5 +244,26 @@
 }
 
 .main-content {
-  padding-top: 80px; /* 헤더 높이만큼 상단 패딩 추가 */
+  padding-top: 80px;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+}
+
+.user-email {
+  margin-left: 8px;
+  font-size: 16px;
+  color: #333;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
