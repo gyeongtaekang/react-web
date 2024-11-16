@@ -14,14 +14,13 @@
 
 ## 홈 화면
 
-![홈 화면](./banner.png)
+![홈 화면](./public/assert/banner.png)
 
 ---
 
 ## 사용 기술
 - **React**: 컴포넌트 기반 UI 개발
 - **Tailwind CSS**: 스타일링 프레임워크
-- **Firebase**: 사용자 인증 및 데이터베이스 관리
 
 ---
 
