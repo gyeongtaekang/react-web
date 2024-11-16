@@ -305,3 +305,14 @@
   border-color: #D81B60;
   background-color: rgba(216, 27, 96, 0.1);
 }
+@media (max-width: 768px) {
+  .icon-button {
+    font-size: 1.25rem;
+    padding: 6px;
+  }
+
+  .logout-button {
+    font-size: 0.8rem;
+    padding: 3px 8px;
+  }
+}
