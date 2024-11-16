@@ -1,0 +1,33 @@
+// src/components/MovieTable/MovieTable.css
+.movie-table {
+  width: 80%;
+  margin: 0 auto;
+}
+
+.movie-table table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.movie-table th, .movie-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+
+.movie-table th {
+  background-color: #f2f2f2;
+}
+
+.pagination-controls {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+}
+
+.pagination-controls button {
+  padding: 5px;
+  font-size: 0.9em;
+  width: auto; /* 버튼의 너비를 글자 크기만큼 조정 */
+}

@@ -193,3 +193,6 @@
 .content-search .movie-grid {
   display: none;
 }
+.view-switch {
+  display: none;
+}

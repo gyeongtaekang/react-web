@@ -1,3 +1,4 @@
+// SignIn.js
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useAuth from '../../state/useAuth';
@@ -26,17 +27,25 @@ function SignIn() {
     registerPassword === confirmPassword &&
     acceptTerms;
 
+  // 저장된 로그인 정보를 불러오기
   useEffect(() => {
-    // 로컬 스토리지에서 로그인 정보 가져오기
-    const savedEmail = localStorage.getItem('savedEmail');
-    const savedPassword = localStorage.getItem('savedPassword');
-    const savedRememberMe = localStorage.getItem('rememberMe') === 'true';
+    const loadSavedLoginInfo = () => {
+      try {
+        const savedEmail = localStorage.getItem('savedEmail');
+        const savedPassword = localStorage.getItem('savedPassword');
+        const savedRememberMe = localStorage.getItem('rememberMe') === 'true';
 
-    if (savedEmail && savedPassword && savedRememberMe) {
-      setEmail(savedEmail);
-      setPassword(savedPassword);
-      setRememberMe(true);
-    }
+        if (savedEmail && savedPassword && savedRememberMe) {
+          setEmail(savedEmail);
+          setPassword(savedPassword);
+          setRememberMe(true);
+        }
+      } catch (error) {
+        console.error('Error loading saved login info:', error);
+      }
+    };
+
+    loadSavedLoginInfo();
   }, []);
 
   const toggleCard = () => {
@@ -48,29 +57,32 @@ function SignIn() {
     try {
       const response = await handleLogin(email, password);
 
-      const userId = response?.userId || response?.data?.userId;
-      if (userId) {
+      const userId = response?.userId || response?.data?.userId || response?.data?.id || response?.id;
+      if (!userId) {
+        toast.error('로그인 실패: 사용자 정보를 확인할 수 없습니다.');
+        return;
+      }
+
+      // 로그인 성공 시 localStorage에 정보 저장
+      if (email) {
         localStorage.setItem('userId', userId);
         localStorage.setItem('userEmail', email);
-      } else {
-        console.error('User ID is null or undefined');
-      }
 
-      // rememberMe 상태에 따라 로컬 스토리지에 저장/삭제
-      if (rememberMe) {
-        localStorage.setItem('savedEmail', email);
-        localStorage.setItem('savedPassword', password);
-        localStorage.setItem('rememberMe', true);
-      } else {
-        localStorage.removeItem('savedEmail');
-        localStorage.removeItem('savedPassword');
-        localStorage.removeItem('rememberMe');
-      }
+        if (rememberMe) {
+          localStorage.setItem('savedEmail', email);
+          localStorage.setItem('savedPassword', password);
+          localStorage.setItem('rememberMe', 'true');
+        } else {
+          localStorage.removeItem('savedEmail');
+          localStorage.removeItem('savedPassword');
+          localStorage.removeItem('rememberMe');
+        }
 
-      toast.success('로그인에 성공했습니다!');
-      setTimeout(() => {
-        navigate('/');
-      }, 100);
+        toast.success('로그인에 성공했습니다!');
+        setTimeout(() => {
+          navigate('/');
+        }, 100);
+      }
     } catch (err) {
       console.error('로그인 오류:', err);
       toast.error(err.message || '로그인에 실패했습니다.');
@@ -84,13 +96,27 @@ function SignIn() {
       return;
     }
     try {
-      const response = await handleRegister(registerEmail, registerPassword);
+      await handleRegister(registerEmail, registerPassword);
       toast.success('회원가입에 성공했습니다! 로그인 해주세요.');
       toggleCard();
     } catch (err) {
       console.error('회원가입 오류:', err);
       toast.error(err.message || '회원가입에 실패했습니다.');
     }
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('userId');
+    localStorage.removeItem('userEmail');
+    localStorage.removeItem('savedEmail');
+    localStorage.removeItem('savedPassword');
+    localStorage.removeItem('rememberMe');
+
+    setEmail('');
+    setPassword('');
+    setRememberMe(false);
+    toast.success('로그아웃 되었습니다.');
+    navigate('/signin');
   };
 
   return (

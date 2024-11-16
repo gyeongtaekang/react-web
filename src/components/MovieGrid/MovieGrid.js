@@ -24,18 +24,7 @@ function MovieGrid({ fetchUrl }) {
     isFetchingNextPage,
   } = useInfiniteQuery({
     queryKey: ['movies', fetchUrl],
-    queryFn: ({ pageParam = 1 }) => {
-      if (fetchUrl.includes('/movie/popular')) {
-        return urlService.fetchPopularMovies(pageParam);
-      } else if (fetchUrl.includes('/movie/now_playing')) {
-        return urlService.fetchNowPlayingMovies(pageParam);
-      } else if (fetchUrl.includes('/discover/movie')) {
-        const url = new URL(fetchUrl);
-        const genre = url.searchParams.get('with_genres');
-        return urlService.fetchMoviesByGenre(genre, pageParam);
-      }
-      throw new Error('Invalid fetch URL');
-    },
+    queryFn: ({ pageParam = 1 }) => urlService.fetchPopularMovies(pageParam),
     getNextPageParam: (lastPage, pages) => {
       if (lastPage.length === 0) return undefined;
       return pages.length + 1;
@@ -54,7 +43,6 @@ function MovieGrid({ fetchUrl }) {
       { rootMargin: '100px' }
     );
 
-    // loadMoreRef.current 값을 안전하게 참조하기 위해 지역 변수에 저장합니다.
     const loadMoreElement = loadMoreRef.current;
 
     if (loadMoreElement) {
@@ -62,7 +50,6 @@ function MovieGrid({ fetchUrl }) {
     }
 
     return () => {
-      // cleanup 함수에서 loadMoreRef.current 대신 지역 변수를 사용합니다.
       if (loadMoreElement) {
         observer.unobserve(loadMoreElement);
       }
@@ -98,10 +85,9 @@ function MovieGrid({ fetchUrl }) {
   return (
     <div className="movie-grid" ref={gridContainerRef}>
       <div className="grid-container grid">
-        {data.pages.map((page, pageIndex) =>
-          page.map((movie, movieIndex) => (
+        {data.pages.map((page) =>
+          page.map((movie) => (
             <div className="movie-rank-container" key={movie.id}>
-              <div className="movie-rank">{movieIndex + 1 + pageIndex * page.length}</div>
               <MovieCard
                 movie={movie}
                 onToggleWishlist={handleToggleWishlist}
@@ -115,6 +101,12 @@ function MovieGrid({ fetchUrl }) {
         {isFetchingNextPage && <div className="loading-spinner">Loading more...</div>}
         {!hasNextPage && <div className="end-message">더 이상 영화가 없습니다.</div>}
       </div>
+      <button
+        className="scroll-to-top"
+        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+      >
+        Top
+      </button>
     </div>
   );
 }
