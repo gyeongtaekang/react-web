@@ -27,6 +27,7 @@ function SignIn() {
     acceptTerms;
 
   useEffect(() => {
+    // 로컬 스토리지에서 로그인 정보 가져오기
     const savedEmail = localStorage.getItem('savedEmail');
     const savedPassword = localStorage.getItem('savedPassword');
     const savedRememberMe = localStorage.getItem('rememberMe') === 'true';
@@ -46,20 +47,16 @@ function SignIn() {
     e.preventDefault();
     try {
       const response = await handleLogin(email, password);
-      console.log('Login API Response:', response);
 
       const userId = response?.userId || response?.data?.userId;
-      console.log('Extracted userId:', userId);
-
       if (userId) {
         localStorage.setItem('userId', userId);
         localStorage.setItem('userEmail', email);
-        console.log('Saved userId:', userId);
-        console.log('Saved userEmail:', email);
       } else {
         console.error('User ID is null or undefined');
       }
 
+      // rememberMe 상태에 따라 로컬 스토리지에 저장/삭제
       if (rememberMe) {
         localStorage.setItem('savedEmail', email);
         localStorage.setItem('savedPassword', password);
@@ -88,7 +85,6 @@ function SignIn() {
     }
     try {
       const response = await handleRegister(registerEmail, registerPassword);
-      console.log('Register API Response:', response);
       toast.success('회원가입에 성공했습니다! 로그인 해주세요.');
       toggleCard();
     } catch (err) {
