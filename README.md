@@ -5,6 +5,13 @@
 
 ---
 
+## 배포된 웹사이트
+
+프로젝트는 Netlify를 통해 배포되었으며, 아래 링크에서 확인할 수 있습니다:  
+**[GYENG NETFLIX 웹사이트](https://gyeong123.netlify.app)**
+
+---
+
 ## 홈 화면
 
 ![홈 화면](./banner.png)
@@ -61,4 +68,4 @@
 
 아래 명령어를 복사하여 GitHub에 코드를 업로드하세요:
 ```bash
-git add . && git commit -m "수정 사항" && git push origin main
+git add . && git commit -m "popular부분 수정 및 무한,격자 스크롤" && git push origin main
