@@ -1,4 +1,3 @@
-// src/components/Header/Header.js
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -10,14 +9,12 @@ function Header() {
   const [isScrollUp, setIsScrollUp] = useState(false);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [userId, setUserId] = useState(null);
-  const [userEmail, setUserEmail] = useState(null);
+  const [userEmail, setUserEmail] = useState(null); // 저장된 이메일 상태
   const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
-      
       if (window.scrollY > lastScrollY) {
         setIsScrollUp(true);
       } else {
@@ -28,13 +25,12 @@ function Header() {
 
     window.addEventListener('scroll', handleScroll);
 
-    const storedUserId = localStorage.getItem('userId');
-    const storedUserEmail = localStorage.getItem('userEmail');
-    console.log("Stored userId in Header:", storedUserId);
-    console.log("Stored userEmail in Header:", storedUserEmail);
-
-    if (storedUserId) setUserId(storedUserId);
-    if (storedUserEmail) setUserEmail(storedUserEmail);
+    // Retrieve savedEmail from localStorage
+    const storedEmail = localStorage.getItem('savedEmail'); // savedEmail 읽기
+    if (storedEmail) {
+      setUserEmail(storedEmail); // 상태에 저장
+      console.log('Set userEmail state from savedEmail:', storedEmail); // 디버깅용 로그
+    }
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
@@ -44,9 +40,9 @@ function Header() {
   const removeKey = () => {
     localStorage.removeItem('userId');
     localStorage.removeItem('userEmail');
-    setUserId(null);
-    setUserEmail(null);
-    navigate('/signin');
+    localStorage.removeItem('savedEmail'); // 로그아웃 시 savedEmail 제거
+    setUserEmail(null); // 상태 초기화
+    navigate('/signin'); // 로그인 페이지로 이동
   };
 
   const toggleMobileMenu = () => {
@@ -72,10 +68,18 @@ function Header() {
           </nav>
         </div>
         <div className="header-right">
-          <button className="icon-button" onClick={removeKey}>
-            <FontAwesomeIcon icon={faUser} />
-          </button>
-          {userEmail && <span className="user-email">{userEmail}</span>}
+          {userEmail ? (
+            <div className="user-info">
+              <span className="user-email">{userEmail}</span> {/* 저장된 이메일 표시 */}
+              <button className="icon-button logout-button" onClick={removeKey}>
+                로그아웃
+              </button>
+            </div>
+          ) : (
+            <button className="icon-button" onClick={() => navigate('/signin')}>
+              <FontAwesomeIcon icon={faUser} />
+            </button>
+          )}
           <button className="icon-button mobile-menu-button" onClick={toggleMobileMenu}>
             <FontAwesomeIcon icon={faBars} />
           </button>

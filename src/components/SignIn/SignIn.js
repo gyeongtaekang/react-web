@@ -19,7 +19,12 @@ function SignIn() {
   const [acceptTerms, setAcceptTerms] = useState(false);
 
   const isLoginFormValid = email && password;
-  const isRegisterFormValid = registerEmail && registerPassword && confirmPassword && registerPassword === confirmPassword && acceptTerms;
+  const isRegisterFormValid =
+    registerEmail &&
+    registerPassword &&
+    confirmPassword &&
+    registerPassword === confirmPassword &&
+    acceptTerms;
 
   useEffect(() => {
     const savedEmail = localStorage.getItem('savedEmail');
@@ -34,22 +39,25 @@ function SignIn() {
   }, []);
 
   const toggleCard = () => {
-    console.log('Switching from', isLoginVisible ? 'Login to Register' : 'Register to Login');
     setIsLoginVisible((prev) => !prev);
   };
-
-  useEffect(() => {
-    console.log('Current content-wrapper class:', isLoginVisible ? 'login-active' : 'register-active');
-  }, [isLoginVisible]);
 
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
     try {
       const response = await handleLogin(email, password);
+      console.log('Login API Response:', response);
+
       const userId = response?.userId || response?.data?.userId;
+      console.log('Extracted userId:', userId);
 
       if (userId) {
         localStorage.setItem('userId', userId);
+        localStorage.setItem('userEmail', email);
+        console.log('Saved userId:', userId);
+        console.log('Saved userEmail:', email);
+      } else {
+        console.error('User ID is null or undefined');
       }
 
       if (rememberMe) {
@@ -67,7 +75,7 @@ function SignIn() {
         navigate('/');
       }, 100);
     } catch (err) {
-      console.error("Login error:", err);
+      console.error('로그인 오류:', err);
       toast.error(err.message || '로그인에 실패했습니다.');
     }
   };
@@ -80,10 +88,11 @@ function SignIn() {
     }
     try {
       const response = await handleRegister(registerEmail, registerPassword);
+      console.log('Register API Response:', response);
       toast.success('회원가입에 성공했습니다! 로그인 해주세요.');
       toggleCard();
     } catch (err) {
-      console.error("Registration error:", err);
+      console.error('회원가입 오류:', err);
       toast.error(err.message || '회원가입에 실패했습니다.');
     }
   };
@@ -92,11 +101,11 @@ function SignIn() {
     <div>
       <div className="bg-image"></div>
       <div className="container">
-        <div id="phone">
-          <div id="content-wrapper" className={isLoginVisible ? 'login-active' : 'register-active'}>
+        <div id="phone" className={isLoginVisible ? 'login-active' : 'register-active'}>
+          <div id="content-wrapper">
             <div className="card" id="login">
               <form onSubmit={handleLoginSubmit}>
-                <h1>Sign in</h1>
+                <h1>로그인</h1>
                 <div className="input">
                   <input
                     id="email"
@@ -106,7 +115,7 @@ function SignIn() {
                     onChange={(e) => setEmail(e.target.value)}
                     required
                   />
-                  <label htmlFor="email">Username or Email</label>
+                  <label htmlFor="email">이메일 주소</label>
                 </div>
                 <div className="input">
                   <input
@@ -117,7 +126,7 @@ function SignIn() {
                     onChange={(e) => setPassword(e.target.value)}
                     required
                   />
-                  <label htmlFor="password">Password</label>
+                  <label htmlFor="password">비밀번호</label>
                 </div>
                 <span className="checkbox remember">
                   <input
@@ -128,25 +137,20 @@ function SignIn() {
                     onChange={(e) => setRememberMe(e.target.checked)}
                   />
                   <label htmlFor="remember" className="read-text">
-                    Remember me
+                    로그인 상태 유지
                   </label>
                 </span>
                 <button type="submit" disabled={!isLoginFormValid || loading}>
-                  {loading ? 'Logging in...' : 'Login'}
+                  {loading ? '로그인 중...' : '로그인'}
                 </button>
               </form>
-              <button
-                type="button"
-                className="account-check"
-                onClick={toggleCard}
-              >
-                Don't have an account? <b>Sign up</b>
+              <button type="button" className="account-check" onClick={toggleCard}>
+                계정이 없으신가요? <b>회원가입</b>
               </button>
             </div>
-
             <div className="card" id="register">
               <form onSubmit={handleRegisterSubmit}>
-                <h1>Sign up</h1>
+                <h1>회원가입</h1>
                 <div className="input">
                   <input
                     id="register-email"
@@ -156,7 +160,7 @@ function SignIn() {
                     onChange={(e) => setRegisterEmail(e.target.value)}
                     required
                   />
-                  <label htmlFor="register-email">Email</label>
+                  <label htmlFor="register-email">이메일 주소</label>
                 </div>
                 <div className="input">
                   <input
@@ -167,7 +171,7 @@ function SignIn() {
                     onChange={(e) => setRegisterPassword(e.target.value)}
                     required
                   />
-                  <label htmlFor="register-password">Password</label>
+                  <label htmlFor="register-password">비밀번호</label>
                 </div>
                 <div className="input">
                   <input
@@ -178,7 +182,7 @@ function SignIn() {
                     onChange={(e) => setConfirmPassword(e.target.value)}
                     required
                   />
-                  <label htmlFor="confirm-password">Confirm Password</label>
+                  <label htmlFor="confirm-password">비밀번호 확인</label>
                 </div>
                 <span className="checkbox remember">
                   <input
@@ -190,19 +194,15 @@ function SignIn() {
                     required
                   />
                   <label htmlFor="terms" className="read-text">
-                    I have read <b>Terms and Conditions</b>
+                    <b>이용 약관</b>에 동의합니다
                   </label>
                 </span>
                 <button type="submit" disabled={!isRegisterFormValid || loading}>
-                  {loading ? 'Registering...' : 'Register'}
+                  {loading ? '등록 중...' : '회원가입'}
                 </button>
               </form>
-              <button
-                type="button"
-                className="account-check"
-                onClick={toggleCard}
-              >
-                Already have an account? <b>Sign in</b>
+              <button type="button" className="account-check" onClick={toggleCard}>
+                이미 계정이 있으신가요? <b>로그인</b>
               </button>
             </div>
           </div>
