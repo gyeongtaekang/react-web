@@ -6,7 +6,6 @@
   --container-start-color: #B0B0B0; /* 연한 회색 */
   --container-end-color: #3F3F3F; /* 어두운 회색 */
   --button-color: #2C5F2D;
-  
 }
 
 /* 배경 이미지 스타일 */
@@ -49,7 +48,6 @@ a {
   display: flex;
   justify-content: center;
   align-items: center;
-  perspective: 1000px; /* 3D 효과 */
 }
 
 #phone {
@@ -92,11 +90,32 @@ a {
 #content-wrapper {
   width: 100%;
   height: 100%;
-  margin: 0;
-  padding: 0;
   position: relative;
-  transform-style: preserve-3d;
-  transition: transform 1s;
+}
+
+/* 로그인 및 회원가입 화면 기본 상태 */
+#login,
+#register {
+  position: absolute;
+  width: 100%;
+  opacity: 0;
+  visibility: hidden;
+  z-index: 1;
+  transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
+}
+
+/* 로그인 화면 활성화 */
+.login-active #login {
+  opacity: 1;
+  visibility: visible;
+  z-index: 2;
+}
+
+/* 회원가입 화면 활성화 */
+.register-active #register {
+  opacity: 1;
+  visibility: visible;
+  z-index: 2;
 }
 
 input {
@@ -152,11 +171,6 @@ button:hover {
   margin-top: 1.5rem;
 }
 
-.line-active {
-  border-bottom: 1px solid #7f7f7f !important;
-  box-shadow: 0px 1px 0px #7f7f7f !important;
-}
-
 .input input {
   background-color: transparent;
   border: none;
@@ -190,150 +204,13 @@ button:hover {
   color: #7f7f7f;
 }
 
-.label-active {
-  transform: translateY(-14px) scale(0.8) !important;
-  transform-origin: 0 0 !important;
-}
-
-.label-blue {
-  color: #7f7f7f !important;
-}
-
-[type="checkbox"]:not(:checked), [type="checkbox"]:checked {
-  position: absolute;
-  opacity: 0;
-  pointer-events: none;
-}
-
-[type="checkbox"]+label {
-  position: relative;
-  padding-left: 25px;
-  cursor: pointer;
-  display: inline-block;
-  height: 25px;
-  line-height: 22px;
-  font-size: 1rem;
-  user-select: none;
-}
-
-[type="checkbox"]+label:before, [type="checkbox"]:not(.filled-in)+label:after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 18px;
-  height: 18px;
-  z-index: 0;
-  border: 2px solid #5a5a5a;
-  border-radius: 3px;
-  margin-top: 2px;
-  transition: .2s;
-}
-
-[type="checkbox"]:not(.filled-in)+label:after {
-  border: 0;
-  transform: scale(0);
-}
-
-[type="checkbox"]:checked+label:before {
-  top: -4px;
-  left: -5px;
-  width: 12px;
-  height: 22px;
-  border-top: 2px solid transparent;
-  border-left: 2px solid transparent;
-  border-right: 2px solid #7f7f7f;
-  border-bottom: 2px solid #7f7f7f;
-  transform: rotate(40deg);
-  backface-visibility: hidden;
-  transform-origin: 100% 100%;
-  border-radius: 1px;
-}
-
 .checkbox {
   margin-top: 2rem;
   display: block;
   margin-bottom: 2rem;
 }
 
-.remember {
-  float: left;
-}
-
-.forgot {
-  float: right;
-}
-
-.forgot a {
-  text-decoration: none;
-  color: #ffffff;
-  font-weight: 600;
-  background: transparent;
-  border: none;
-  padding: 0;
-  transition: all 0.2s ease;
-}
-
-.card form {
-  transform: translateX(0px);
-  transition: all 0.3s 0.4s ease;
-}
-
-.forgot a:hover {
-  color: #272727;
-  text-decoration: underline;
-}
-
-#login {
-  z-index: 2;
-  top: 5svh;
-  transform: rotateY(0deg);
-  backface-visibility: hidden;
-  transition: transform 1s ease;
-}
-
-#register {
-  z-index: 1;
-  top: 5svh;
-  transform: rotateY(180deg);
-  backface-visibility: hidden;
-  transition: transform 1s ease;
-}
-
-#content-wrapper.hidden #login {
-  transform: rotateY(180deg);
-}
-
-#content-wrapper.hidden #register {
-  transform: rotateY(0deg);
-}
-
-.account-check, .already-account-check {
-  width: auto;
-  text-align: center;
-  position: relative;
-  bottom: -10px;
-  left: 50%;
-  transform: translateX(-50%);
-  text-decoration: none;
-  color: #ffffff;
-  font-weight: 600;
-  padding: 0;
-  background: transparent;
-  border: none;
-  transition: all 0.2s ease;
-  z-index: 3;
-}
-
-.hidden .account-check,
-.hidden .already-account-check {
-  opacity: 1;
-  visibility: visible;
-  z-index: 2;
-  transition: all 0.2s ease;
-}
-
-.account-check:hover, .already-account-check:hover {
+.account-check:hover {
   color: #272727;
   text-decoration: underline;
 }

@@ -8,8 +8,8 @@
 
 .grid-container {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* 200px 크기로 열 생성 */
-  gap: 15px; /* 카드 간 간격 */
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 15px;
   width: 100%;
   padding: 20px;
 }

@@ -10,7 +10,7 @@ export const loginUser = createAsyncThunk(
   'auth/loginUser',
   async ({ email, password }, { rejectWithValue }) => {
     try {
-      const user = await authService.tryLogin(email, password, true);
+      const user = await authService.tryLogin(email, password, true); // 로그인
       return user;
     } catch (err) {
       return rejectWithValue(err.message || '로그인에 실패했습니다.');
@@ -23,8 +23,8 @@ export const registerUser = createAsyncThunk(
   'auth/registerUser',
   async ({ email, password }, { rejectWithValue }) => {
     try {
-      await authService.tryRegister(email, password);
-      return { email };
+      await authService.tryRegister(email, password); // 회원가입
+      return { email }; // 성공적으로 등록된 사용자 이메일 반환
     } catch (err) {
       return rejectWithValue(err.message || '회원가입에 실패했습니다.');
     }
@@ -67,6 +67,7 @@ const authSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       })
+      
       // 회원가입 Thunk
       .addCase(registerUser.pending, (state) => {
         state.loading = true;

@@ -10,7 +10,7 @@ function MovieInfiniteScroll({ apiKey, genreCode, sortingOrder, voteEverage }) {
   const [currentPage, setCurrentPage] = useState(1);
   const [rowSize, setRowSize] = useState(4);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
-  const [currentView] = useState('grid');
+  const [currentView, setCurrentView] = useState('grid'); // 현재 뷰 모드 상태 추가 ('grid' 또는 'table')
   const [hasMore, setHasMore] = useState(true);
   const [showTopButton, setShowTopButton] = useState(false);
 
@@ -35,7 +35,6 @@ function MovieInfiniteScroll({ apiKey, genreCode, sortingOrder, voteEverage }) {
         observer.current.disconnect();
       }
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
   const observer = useRef(null);
@@ -49,7 +48,7 @@ function MovieInfiniteScroll({ apiKey, genreCode, sortingOrder, voteEverage }) {
   const setupIntersectionObserver = () => {
     observer.current = new IntersectionObserver(
       (entries) => {
-        if (entries[0].isIntersecting && !loading && hasMore) {
+        if (entries[0].isIntersecting && !loading && hasMore && currentView === 'grid') {
           fetchMoreMovies();
         }
       },
@@ -87,8 +86,6 @@ function MovieInfiniteScroll({ apiKey, genreCode, sortingOrder, voteEverage }) {
   const fetchMoreMovies = () => {
     if (loading || !hasMore) return;
     setCurrentPage((prevPage) => prevPage + 1);
-    // `useFetch`는 이미 다음 페이지 데이터를 가져오므로 추가 fetch는 필요 없습니다.
-    // 다만, `useFetch`의 구현이 페이지를 인식하도록 설정되어 있어야 합니다.
   };
 
   const [movies, setMovies] = useState([]);
@@ -128,51 +125,81 @@ function MovieInfiniteScroll({ apiKey, genreCode, sortingOrder, voteEverage }) {
     return wishlist.some((movie) => movie.id === movieId);
   };
 
-  if (loading && currentPage === 1) {
-    return (
-      <div className="movie-grid">
-        <div className="loading-spinner">Loading...</div>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="movie-grid">
-        <div className="error-message">Failed to load movies.</div>
-      </div>
-    );
-  }
+  const switchView = () => {
+    setCurrentView((prevView) => (prevView === 'grid' ? 'table' : 'grid'));
+    resetMovies();
+  };
 
   return (
-    <div className="movie-grid" ref={gridContainerRef}>
-      <div className={`grid-container grid`}>
-        {movies.map((movie) => (
-          <div
-            key={movie.id}
-            className="movie-card"
-            onClick={() => toggleWishlistHandler(movie)}
-          >
-            <img src={getImageUrl(movie.poster_path)} alt={movie.title} />
-            <div className="movie-title">{movie.title}</div>
-            {isInWishlist(movie.id) && (
-              <div className="wishlist-indicator">👍</div>
+    <div>
+      {/* 전환 버튼을 상단 오른쪽에 배치 */}
+      <div className="view-switch" style={{ position: 'absolute', top: '10px', right: '10px', zIndex: 1000 }}>
+        <button onClick={switchView}>
+          {currentView === 'grid' ? 'Switch to Table View' : 'Switch to Infinite Scroll'}
+        </button>
+      </div>
+
+      {currentView === 'grid' ? (
+        <div className="movie-grid" ref={gridContainerRef}>
+          <div className={`grid-container grid`}>
+            {movies.map((movie) => (
+              <div
+                key={movie.id}
+                className="movie-card"
+                onClick={() => toggleWishlistHandler(movie)}
+              >
+                <img src={getImageUrl(movie.poster_path)} alt={movie.title} />
+                <div className="movie-title">{movie.title}</div>
+                {isInWishlist(movie.id) && (
+                  <div className="wishlist-indicator">👍</div>
+                )}
+              </div>
+            ))}
+          </div>
+          <div ref={loadingTriggerRef} className="loading-trigger">
+            {loading && hasMore && (
+              <div className="loading-indicator">
+                <div className="spinner"></div>
+                <span>Loading...</span>
+              </div>
             )}
           </div>
-        ))}
-      </div>
-      <div ref={loadingTriggerRef} className="loading-trigger">
-        {loading && hasMore && (
-          <div className="loading-indicator">
-            <div className="spinner"></div>
-            <span>Loading...</span>
+          {showTopButton && (
+            <button onClick={scrollToTopAndReset} className="top-button">
+              Top
+            </button>
+          )}
+        </div>
+      ) : (
+        <div className="movie-table">
+          <table>
+            <thead>
+              <tr>
+                <th>Poster</th>
+                <th>Title</th>
+                <th>Rating</th>
+              </tr>
+            </thead>
+            <tbody>
+              {movies.slice((currentPage - 1) * rowSize, currentPage * rowSize).map((movie) => (
+                <tr key={movie.id} onClick={() => toggleWishlistHandler(movie)}>
+                  <td><img src={getImageUrl(movie.poster_path)} alt={movie.title} /></td>
+                  <td>{movie.title}</td>
+                  <td>{movie.vote_average}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <div className="pagination">
+            <button onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))} disabled={currentPage === 1}>
+              Previous
+            </button>
+            <span>{currentPage}</span>
+            <button onClick={() => setCurrentPage((prev) => prev + 1)} disabled={currentPage === Math.ceil(movies.length / rowSize)}>
+              Next
+            </button>
           </div>
-        )}
-      </div>
-      {showTopButton && (
-        <button onClick={scrollToTopAndReset} className="top-button">
-          Top
-        </button>
+        </div>
       )}
     </div>
   );

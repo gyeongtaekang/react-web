@@ -1,4 +1,3 @@
-// src/components/SignIn/SignIn.js
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useAuth from '../../state/useAuth';
@@ -13,24 +12,15 @@ function SignIn() {
   const [isLoginVisible, setIsLoginVisible] = useState(true);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
   const [registerEmail, setRegisterEmail] = useState('');
   const [registerPassword, setRegisterPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-
   const [rememberMe, setRememberMe] = useState(false);
   const [acceptTerms, setAcceptTerms] = useState(false);
 
-  // 로그인 폼의 유효성 검사
   const isLoginFormValid = email && password;
-  const isRegisterFormValid =
-    registerEmail &&
-    registerPassword &&
-    confirmPassword &&
-    registerPassword === confirmPassword &&
-    acceptTerms;
+  const isRegisterFormValid = registerEmail && registerPassword && confirmPassword && registerPassword === confirmPassword && acceptTerms;
 
-  // 페이지 로드 시 로컬 스토리지에 저장된 이메일과 비밀번호 불러오기
   useEffect(() => {
     const savedEmail = localStorage.getItem('savedEmail');
     const savedPassword = localStorage.getItem('savedPassword');
@@ -44,31 +34,24 @@ function SignIn() {
   }, []);
 
   const toggleCard = () => {
-    setIsLoginVisible(!isLoginVisible);
-    const contentWrapper = document.getElementById('content-wrapper');
-    if (contentWrapper) {
-      contentWrapper.classList.toggle('hidden');
-    }
+    console.log('Switching from', isLoginVisible ? 'Login to Register' : 'Register to Login');
+    setIsLoginVisible((prev) => !prev);
   };
+
+  useEffect(() => {
+    console.log('Current content-wrapper class:', isLoginVisible ? 'login-active' : 'register-active');
+  }, [isLoginVisible]);
 
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await handleLogin(email, password); 
-      console.log("Full response:", response);
-
+      const response = await handleLogin(email, password);
       const userId = response?.userId || response?.data?.userId;
-      const userEmail = email;
 
       if (userId) {
-        localStorage.setItem('userId', userId); 
+        localStorage.setItem('userId', userId);
       }
 
-      if (userEmail) {
-        localStorage.setItem('userEmail', userEmail); 
-      }
-
-      // rememberMe가 true인 경우 이메일과 비밀번호를 저장
       if (rememberMe) {
         localStorage.setItem('savedEmail', email);
         localStorage.setItem('savedPassword', password);
@@ -80,10 +63,9 @@ function SignIn() {
       }
 
       toast.success('로그인에 성공했습니다!');
-      
       setTimeout(() => {
         navigate('/');
-      }, 100); 
+      }, 100);
     } catch (err) {
       console.error("Login error:", err);
       toast.error(err.message || '로그인에 실패했습니다.');
@@ -92,15 +74,16 @@ function SignIn() {
 
   const handleRegisterSubmit = async (e) => {
     e.preventDefault();
-    if (registerPassword !== confirmPassword) {
-      toast.error('비밀번호가 일치하지 않습니다.');
+    if (!isRegisterFormValid) {
+      toast.error('모든 필드를 올바르게 입력해주세요.');
       return;
     }
     try {
-      await handleRegister(registerEmail, registerPassword);
+      const response = await handleRegister(registerEmail, registerPassword);
       toast.success('회원가입에 성공했습니다! 로그인 해주세요.');
       toggleCard();
     } catch (err) {
+      console.error("Registration error:", err);
       toast.error(err.message || '회원가입에 실패했습니다.');
     }
   };
@@ -110,9 +93,8 @@ function SignIn() {
       <div className="bg-image"></div>
       <div className="container">
         <div id="phone">
-          <div id="content-wrapper">
-            {/* 로그인 폼 */}
-            <div className={`card ${!isLoginVisible ? 'hidden' : ''}`} id="login">
+          <div id="content-wrapper" className={isLoginVisible ? 'login-active' : 'register-active'}>
+            <div className="card" id="login">
               <form onSubmit={handleLoginSubmit}>
                 <h1>Sign in</h1>
                 <div className="input">
@@ -153,13 +135,16 @@ function SignIn() {
                   {loading ? 'Logging in...' : 'Login'}
                 </button>
               </form>
-              <button type="button" className="account-check" onClick={toggleCard}>
+              <button
+                type="button"
+                className="account-check"
+                onClick={toggleCard}
+              >
                 Don't have an account? <b>Sign up</b>
               </button>
             </div>
 
-            {/* 회원가입 폼 */}
-            <div className={`card ${isLoginVisible ? 'hidden' : ''}`} id="register">
+            <div className="card" id="register">
               <form onSubmit={handleRegisterSubmit}>
                 <h1>Sign up</h1>
                 <div className="input">
@@ -212,7 +197,11 @@ function SignIn() {
                   {loading ? 'Registering...' : 'Register'}
                 </button>
               </form>
-              <button type="button" className="account-check" onClick={toggleCard}>
+              <button
+                type="button"
+                className="account-check"
+                onClick={toggleCard}
+              >
                 Already have an account? <b>Sign in</b>
               </button>
             </div>
