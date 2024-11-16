@@ -3,7 +3,7 @@
   --container-end-x: -90%;
   --container-start-y: -58%;
   --container-end-y: -42%;
-  --container-start-color: #c62323; /* 연한 회색 */
+  --container-start-color: #b0b0b0; /* 연한 회색 */
   --container-end-color: #3f3f3f; /* 어두운 회색 */
   --button-color: #2c5f2d;
 }
@@ -143,7 +143,7 @@ button {
   border: none;
   width: 100%;
   max-width: 100%;
-  background-color: #878d90 !important; /* 중간 회색 */
+  background-color: #12a4ed !important; /* 중간 회색 */
   color: #502a78;
   padding: 10px;
   text-transform: uppercase;
