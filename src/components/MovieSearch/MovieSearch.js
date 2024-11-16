@@ -3,7 +3,8 @@ import React, { useState, useEffect } from 'react';
 import './MovieSearch.css';
 
 function MovieSearch({ changeOptions }) {
-  const API_KEY = '01bede4653551df3f6f5e17074771100';
+  const API_KEY = process.env.REACT_APP_TMDB_API_KEY;
+
   const BASE_URL = `https://api.themoviedb.org/3/discover/movie`;
 
   const dropdowns = {
