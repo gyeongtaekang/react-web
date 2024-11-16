@@ -1,73 +1,64 @@
+# GYENG NETFLIX 클론
+
+이 프로젝트는 React와 Tailwind CSS를 사용하여 GYENG NETFLIX를 클론한 프로젝트입니다.  
+2024년 2학기 **웹서비스 설계 과목 2차 과제**로 제작되었습니다.
+
+---
+
+## 홈 화면
+
+![홈 화면](./banner.png)
+
+---
+
+## 사용 기술
+- **React**: 컴포넌트 기반 UI 개발
+- **Tailwind CSS**: 스타일링 프레임워크
+- **Firebase**: 사용자 인증 및 데이터베이스 관리
+
+---
+
 # Create React App으로 시작하기
 
-이 프로젝트는 [Create React App](https://github.com/facebook/create-react-app)으로 부트스트랩되었습니다.
+이 프로젝트는 다운로드 후 아래 두 단계를 수행하면 바로 실행할 수 있습니다:
+1. **필수 패키지 설치**: `npm install`
+2. **앱 실행**: `npm start`  
+   브라우저에서 [http://localhost:3000](http://localhost:3000)을 열어 확인하세요.
+
+---
 
 ## 사용 가능한 스크립트
 
-프로젝트 디렉터리에서 다음 명령어를 실행할 수 있습니다:
+프로젝트 디렉터리에서 실행할 수 있는 주요 명령어는 다음과 같습니다:
+
+### `npm install`
+- 프로젝트에 필요한 모든 종속성을 설치합니다.
+- `package.json` 파일을 기반으로 `node_modules` 디렉터리를 생성합니다.
+- **새 프로젝트를 다운로드한 경우 이 명령을 먼저 실행해야 합니다.**
 
 ### `npm start`
-
-개발 모드로 앱을 실행합니다.  
-브라우저에서 [http://localhost:3000](http://localhost:3000)을 열어 확인할 수 있습니다.
-
-코드를 수정하면 페이지가 자동으로 새로고침됩니다.  
-또한 콘솔에서 린트 오류를 확인할 수 있습니다.
+- 개발 모드로 앱을 실행합니다.
+- [http://localhost:3000](http://localhost:3000)에서 확인할 수 있습니다.
+- **핫 리로드**를 지원하여 코드 수정 시 페이지가 자동으로 새로고침됩니다.
 
 ### `npm test`
-
-테스트 러너를 인터랙티브 워치 모드로 실행합니다.  
-자세한 내용은 [테스트 실행](https://facebook.github.io/create-react-app/docs/running-tests) 섹션을 참조하세요.
+- 테스트 러너를 실행하여 작성된 테스트 코드를 확인합니다.
+- 자세한 내용은 [테스트 실행 가이드](https://facebook.github.io/create-react-app/docs/running-tests)를 참고하세요.
 
 ### `npm run build`
-
-프로덕션용으로 앱을 `build` 폴더에 빌드합니다.  
-프로덕션 모드로 React를 최적화하여 빌드합니다.
-
-빌드는 압축되고 파일 이름에는 해시가 포함됩니다.  
-앱이 배포할 준비가 완료되었습니다!
-
-배포에 대한 자세한 내용은 [배포](https://facebook.github.io/create-react-app/docs/deployment) 섹션을 참조하세요.
+- 프로덕션용으로 앱을 빌드합니다.
+- 결과물은 `build` 폴더에 생성됩니다.
+- 빌드된 파일은 압축되며 파일 이름에는 캐싱을 위한 해시값이 포함됩니다.
+- **배포 준비 완료 상태**가 됩니다. 배포 방법은 [배포 가이드](https://facebook.github.io/create-react-app/docs/deployment)를 참고하세요.
 
 ### `npm run eject`
+- 기본 설정을 커스터마이징하고 싶을 때 사용합니다.
+- **주의**: 이 명령어는 되돌릴 수 없습니다. 사용 후에는 모든 설정 파일이 프로젝트 디렉터리로 노출됩니다.
 
-**참고: 이 작업은 되돌릴 수 없습니다. 한 번 `eject`를 실행하면 다시 되돌릴 수 없습니다!**
+---
 
-빌드 도구와 설정에 만족하지 못할 경우 언제든지 `eject`를 실행할 수 있습니다. 이 명령어는 프로젝트에서 모든 설정 파일과 종속성을 제거하고, 프로젝트 폴더로 직접 복사하여 완전히 제어할 수 있게 해줍니다.
+## Git 명령어로 프로젝트 업로드
 
-`eject`를 제외한 모든 명령어는 여전히 작동하며, 복사된 설정을 통해 세부 사항을 조정할 수 있습니다. 이 시점부터는 전적으로 사용자의 책임 하에 관리됩니다.
-
-이 기능을 반드시 사용해야 하는 것은 아닙니다. 커스터마이즈할 필요가 없는 소규모 프로젝트나 중규모 프로젝트에 적합한 기본 설정을 제공합니다. 그러나 필요할 경우 언제든지 사용할 수 있습니다.
-
-## 더 알아보기
-
-[Create React App 문서](https://facebook.github.io/create-react-app/docs/getting-started)에서 더 많은 정보를 확인할 수 있습니다.
-
-React에 대해 더 알아보고 싶다면 [React 문서](https://reactjs.org/)를 확인하세요.
-
-### 코드 스플리팅
-
-이 섹션은 여기로 이동되었습니다: [코드 스플리팅](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### 번들 크기 분석
-
-이 섹션은 여기로 이동되었습니다: [번들 크기 분석](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### 프로그레시브 웹 앱 만들기
-
-이 섹션은 여기로 이동되었습니다: [프로그레시브 웹 앱 만들기](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### 고급 구성
-
-이 섹션은 여기로 이동되었습니다: [고급 구성](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### 배포
-
-이 섹션은 여기로 이동되었습니다: [배포](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build`의 압축 실패
-
-이 섹션은 여기로 이동되었습니다: [빌드 압축 실패](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-
-git add . ; git commit -m "popular부분 수정 및 무한,격자 스크롤" ; git push origin main
-이건 깃허브 올리는 명령어
+아래 명령어를 복사하여 GitHub에 코드를 업로드하세요:
+```bash
+git add . && git commit -m "수정 사항" && git push origin main
