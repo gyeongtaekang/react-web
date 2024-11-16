@@ -68,3 +68,6 @@ React에 대해 더 알아보고 싶다면 [React 문서](https://reactjs.org/)�
 ### `npm run build`의 압축 실패
 
 이 섹션은 여기로 이동되었습니다: [빌드 압축 실패](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+git add . ; git commit -m "popular부분 수정 및 무한,격자 스크롤" ; git push origin main
+이건 깃허브 올리는 명령어
