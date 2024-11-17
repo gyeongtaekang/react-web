@@ -68,3 +68,62 @@
 아래 명령어를 복사하여 GitHub에 코드를 업로드하세요:
 ```bash
 git add . ; git commit -m "수정사항" ; git push origin main
+
+---
+# 📂 프로젝트 폴더 구조
+
+```plaintext
+├── 📂 build
+├── 📂 node_modules
+├── 📂 public
+│   ├── 📂 assert
+│   ├── 📄 index.html
+│   ├── 📄 logo192.png
+│   ├── 📄 logo512.png
+│   ├── 📄 lolo.png
+│   ├── 📄 manifest.json
+│   └── 📄 robots.txt
+├── 📂 src
+│   ├── 📂 components
+│   │   ├── 📂 Banner
+│   │   ├── 📄 handleLogin.js
+│   │   ├── 📂 Header
+│   │   ├── 📂 HomeMiddle
+│   │   ├── 📂 LoadingSpinner
+│   │   ├── 📂 MovieCard
+│   │   ├── 📂 MovieGrid
+│   │   ├── 📂 MovieInfiniteScroll
+│   │   ├── 📂 MovieSearch
+│   │   ├── 📂 MovieTable
+│   │   ├── 📂 MovieWishlist
+│   │   ├── 📂 ProtectedRoute
+│   │   └── 📂 SignIn
+│   ├── 📂 services
+│   ├── 📂 state
+│   ├── 📂 store
+│   ├── 📂 styles
+│   ├── 📂 utils
+│   ├── 📂 views
+│   │   ├── 📂 Home
+│   │   │   ├── 📂 HomeMain
+│   │   │   ├── 📂 HomePopular
+│   │   │   ├── 📂 HomeWishlist
+│   │   │   └── 📄 Home.js
+│   │   ├── 📂 Search
+│   │   │   ├── 📄 HomeSearch.css
+│   │   │   └── 📄 HomeSearch.js
+│   ├── 📄 App.css
+│   ├── 📄 App.js
+│   ├── 📄 App.test.js
+│   ├── 📄 index.css
+│   ├── 📄 index.js
+│   ├── 📄 reportWebVitals.js
+│   ├── 📄 Router.js
+│   └── 📄 setupTests.js
+├── 📄 .env
+├── 📄 .gitignore
+├── 📄 package-lock.json
+├── 📄 package.json
+├── 📄 postcss.config.js
+├── 📄 README.md
+└── 📄 tailwind.config.js
