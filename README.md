@@ -14,7 +14,7 @@
 
 ## 홈 화면
 
-![홈 화면](./public/assert/banner.png)
+![홈 화면](./public/assert/ReadmeImg.png)
 
 ---
 
