@@ -67,4 +67,4 @@
 
 아래 명령어를 복사하여 GitHub에 코드를 업로드하세요:
 ```bash
-git add . && git commit -m "popular부분 수정 및 무한,격자 스크롤" && git push origin main
+git add . ; git commit -m "수정사항" ; git push origin main
