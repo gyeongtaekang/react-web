@@ -52,14 +52,10 @@
   opacity: 1;
 }
 
-.movie-overlay h3 {
-  font-size: 1.2rem;
-  margin-bottom: 8px;
-}
-
-.movie-overlay p {
+.movie-overlay h3, .movie-overlay p {
   font-size: 1rem;
   line-height: 1.2;
+  margin-bottom: 8px;
 }
 
 /* 영화 행 스타일 */
@@ -91,14 +87,6 @@
   .movie-row h2 {
     font-size: 1.4rem;
   }
-
-  .movie-overlay h3 {
-    font-size: 1.1rem;
-  }
-
-  .movie-overlay p {
-    font-size: 0.9rem;
-  }
 }
 
 @media (max-width: 768px) {
@@ -108,14 +96,6 @@
 
   .movie-row h2 {
     font-size: 1.3rem;
-  }
-
-  .movie-overlay h3 {
-    font-size: 1rem;
-  }
-
-  .movie-overlay p {
-    font-size: 0.8rem;
   }
 }
 
@@ -127,12 +107,22 @@
   .movie-row h2 {
     font-size: 1.2rem;
   }
+}
 
-  .movie-overlay h3 {
-    font-size: 0.9rem;
-  }
+/* 버튼 스타일 */
+.play-btn, .title-btn {
+  color: white; /* 텍스트 색상을 흰색으로 설정 */
+  background-color: transparent; /* 배경색을 투명하게 설정 */
+  border: none; /* 필요 시 테두리 제거 */
+  font-size: 1rem; /* 텍스트 크기 조정 */
+  cursor: pointer; /* 클릭 가능하도록 커서 변경 */
+  transition: color 0.3s ease;
+}
 
-  .movie-overlay p {
-    font-size: 0.7rem;
-  }
+.play-btn:hover, .title-btn:hover {
+  color: #f0f0f0; /* 호버 시 약간 밝은 흰색으로 변경 */
+}
+
+.play-btn:active, .title-btn:active {
+  transform: scale(0.95); /* 클릭 시 눌리는 효과 */
 }
