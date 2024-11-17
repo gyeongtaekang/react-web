@@ -151,7 +151,7 @@ function MovieInfiniteScroll({ apiKey, genreCode, sortingOrder, voteEverage }) {
                 <img src={getImageUrl(movie.poster_path)} alt={movie.title} />
                 <div className="movie-title">{movie.title}</div>
                 {isInWishlist(movie.id) && (
-                  <div className="wishlist-indicator">👍</div>
+                  <div className="wishlist-indicator">🧡</div>
                 )}
               </div>
             ))}
