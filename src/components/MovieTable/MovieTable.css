@@ -1,16 +1,10 @@
 /* src/components/MovieTable/MovieTable.css */
-<<<<<<< HEAD
+
+
 .movie-table {
   width: 80%;
   margin: 100px auto 0; /* 상단 마진 100px 추가 */
-=======
-.movie-table-container {
-  padding: 20px;
-  overflow-x: auto;
-  margin-top: 100px;
->>>>>>> feature/movie-table-style
 }
-
 .movie-table {
   width: 100%;
   border-collapse: collapse;
@@ -33,11 +27,11 @@
 }
 
 .movie-table th {
-<<<<<<< HEAD
+
   background-color: #f2f2f2;
   color: #000000; /* 헤더 텍스트 검정색으로 변경 */
   font-weight: bold;
-=======
+
   background-color: #ffffff; /* 헤더는 불투명한 흰색 유지 */
   font-weight: bold;
   padding: 12px;
@@ -124,7 +118,7 @@
 
 .pagination button:disabled {
   background-color: #ccc;
->>>>>>> feature/movie-table-style
+
 }
 
 .pagination-controls {
@@ -136,7 +130,7 @@
 .pagination-controls button {
   padding: 5px;
   font-size: 0.9em;
-<<<<<<< HEAD
+
   width: auto; /* 버튼의 너비를 글자 크기만큼 조정 */
 }
 
@@ -147,7 +141,5 @@
 
 .star.filled {
   color: #FFD700; /* 노란색 별점 */
-=======
-  width: auto; /* 버���의 너비를 글자 크기만큼 조정 */
->>>>>>> feature/movie-table-style
+  width: auto; 
 }
