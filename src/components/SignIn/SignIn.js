@@ -5,7 +5,7 @@ import useAuth from '../../state/useAuth';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './SignIn.css';
-import TermsModal from './TermsModal';
+import TermsModal from './TermsModal.js';
 
 function SignIn() {
   const { handleLogin, handleRegister, loading } = useAuth();
