@@ -1,7 +1,7 @@
- /* src/components/MovieTable/MovieTable.css */
+/* src/components/MovieTable/MovieTable.css */
 .movie-table {
   width: 80%;
-  margin: 0 auto;
+  margin: 100px auto 0; /* 상단 마진 100px 추가 */
 }
 
 .movie-table table {
@@ -18,6 +18,8 @@
 
 .movie-table th {
   background-color: #f2f2f2;
+  color: #000000; /* 헤더 텍스트 검정색으로 변경 */
+  font-weight: bold;
 }
 
 .pagination-controls {
@@ -30,4 +32,13 @@
   padding: 5px;
   font-size: 0.9em;
   width: auto; /* 버튼의 너비를 글자 크기만큼 조정 */
+}
+
+/* 별점 스타일 */
+.star {
+  color: #ddd;
+}
+
+.star.filled {
+  color: #FFD700; /* 노란색 별점 */
 }
