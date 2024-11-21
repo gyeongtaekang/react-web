@@ -29,7 +29,7 @@ function SignIn() {
     registerPassword === confirmPassword &&
     acceptTerms;
 
-  // ��장된 로그인 정보를 불러오기  이 부분 수정했잖아!!!
+  // ��장된 로그인 정보를 불러오기  이 부분 수정
   useEffect(() => {
     const loadSavedLoginInfo = () => {
       try {
