@@ -5,6 +5,7 @@ import useAuth from '../../state/useAuth';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './SignIn.css';
+import TermsModal from './TermsModal';
 
 function SignIn() {
   const { handleLogin, handleRegister, loading } = useAuth();
@@ -18,6 +19,7 @@ function SignIn() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
   const [acceptTerms, setAcceptTerms] = useState(false);
+  const [showTerms, setShowTerms] = useState(false);
 
   const isLoginFormValid = email && password;
   const isRegisterFormValid =
@@ -27,7 +29,7 @@ function SignIn() {
     registerPassword === confirmPassword &&
     acceptTerms;
 
-  // 저장된 로그인 정보를 불러오기
+  // ��장된 로그인 정보를 불러오기
   useEffect(() => {
     const loadSavedLoginInfo = () => {
       try {
@@ -46,6 +48,18 @@ function SignIn() {
     };
 
     loadSavedLoginInfo();
+  }, []);
+
+  useEffect(() => {
+    const savedEmail = localStorage.getItem('rememberedEmail');
+    const savedPassword = localStorage.getItem('rememberedPassword');
+    const savedRememberMe = localStorage.getItem('rememberMe') === 'true';
+
+    if (savedEmail && savedPassword && savedRememberMe) {
+      setEmail(savedEmail);
+      setPassword(savedPassword);
+      setRememberMe(true);
+    }
   }, []);
 
   const toggleCard = () => {
@@ -89,6 +103,34 @@ function SignIn() {
     }
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    try {
+      const success = await handleLogin(email, password);
+      
+      if (success) {
+        // 로그인 상태 유지 처리
+        if (rememberMe) {
+          localStorage.setItem('rememberedEmail', email);
+          localStorage.setItem('rememberedPassword', password);
+          localStorage.setItem('rememberMe', 'true');
+        } else {
+          localStorage.removeItem('rememberedEmail');
+          localStorage.removeItem('rememberedPassword');
+          localStorage.removeItem('rememberMe');
+        }
+        
+        navigate('/');
+      } else {
+        toast.error('이메일 또는 비밀번호가 올바르지 않습니다.');
+      }
+    } catch (error) {
+      console.error('로그인 에러:', error);
+      toast.error('로그인 중 오류가 발생했습니다.');
+    }
+  };
+
   const handleRegisterSubmit = async (e) => {
     e.preventDefault();
     if (!isRegisterFormValid) {
@@ -117,6 +159,16 @@ function SignIn() {
     setRememberMe(false);
     toast.success('로그아웃 되었습니다.');
     navigate('/signin');
+  };
+
+  const handleTermsClick = (e) => {
+    e.preventDefault();
+    setShowTerms(true);
+  };
+
+  const handleTermsAgree = () => {
+    setAcceptTerms(true);
+    setShowTerms(false);
   };
 
   return (
@@ -206,19 +258,22 @@ function SignIn() {
                   />
                   <label htmlFor="confirm-password">비밀번호 확인</label>
                 </div>
-                <span className="checkbox remember">
+                <div className="checkbox-wrapper">
                   <input
                     type="checkbox"
                     id="terms"
                     checked={acceptTerms}
-                    name="acceptTerms"
-                    onChange={(e) => setAcceptTerms(e.target.checked)}
-                    required
+                    onChange={() => setShowTerms(true)}
                   />
-                  <label htmlFor="terms" className="read-text">
+                  <label 
+                    htmlFor="terms" 
+                    className="read-text"
+                    onClick={handleTermsClick}
+                    style={{ cursor: 'pointer' }}
+                  >
                     <b>이용 약관</b>에 동의합니다
                   </label>
-                </span>
+                </div>
                 <button type="submit" disabled={!isRegisterFormValid || loading}>
                   {loading ? '등록 중...' : '회원가입'}
                 </button>
@@ -230,6 +285,14 @@ function SignIn() {
           </div>
         </div>
       </div>
+      <TermsModal 
+        show={showTerms}
+        onHide={() => setShowTerms(false)}
+        onAgree={() => {
+          setAcceptTerms(true);
+          setShowTerms(false);
+        }}
+      />
       <ToastContainer />
     </div>
   );
