@@ -179,3 +179,15 @@ h1 {
   height: 100%; /* 부모 요소 기준 높이 */
   margin: 0; /* 기본 여백 제거 */
 }
+
+/* 인풋 스타일 */
+input {
+  color: #000000 !important; /* 검은색으로 변경 */
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+  -webkit-text-fill-color: #000000;
+  transition: background-color 5000s ease-in-out 0s;
+}
