@@ -133,6 +133,13 @@ function SignIn() {
 
   const handleRegisterSubmit = async (e) => {
     e.preventDefault();
+    
+    // 이메일 유효성 검사
+    if (!isValidEmail(registerEmail)) {
+      toast.error('유효한 이메일 주소를 입력해주세요.');
+      return;
+    }
+
     if (!isRegisterFormValid) {
       toast.error('모든 필드를 올바르게 입력해주세요.');
       return;
@@ -169,6 +176,12 @@ function SignIn() {
   const handleTermsAgree = () => {
     setAcceptTerms(true);
     setShowTerms(false);
+  };
+
+  // 이메일 유효성 검사 함수 추가 (기존 코드 바로 아래에 추가)
+  const isValidEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
   };
 
   return (
