@@ -31,4 +31,59 @@
     background-color: red; /* 활성화된 버튼의 배경색을 빨간색으로 설정 */
     color: white; /* 가독성을 위해 텍스트 색상을 흰색으로 변경 */
   }
-  
+
+button {
+  padding: 10px;
+  font-size: 1.2rem;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: #666;
+  transition: color 0.2s ease;
+}
+
+button:hover {
+  color: #333;
+}
+
+button.active {
+  color: #007bff;
+}
+
+
+.view-toggle-container {
+  position: fixed;
+  top: 100px; /* 상단에서 100px 떨어짐 */
+  left: 20px; /* 왼쪽에서 20px 떨어짐 */
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.view-toggle-container button {
+  padding: 10px;
+  font-size: 1.2rem;
+  border: none;
+  background: rgba(255, 255, 255, 0.9);
+  cursor: pointer;
+  color: #666;
+  transition: all 0.2s ease;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.view-toggle-container button:hover {
+  color: #333;
+  transform: scale(1.1);
+}
+
+.view-toggle-container button.active {
+  color: #007bff;
+  background: rgba(255, 255, 255, 1);
+}

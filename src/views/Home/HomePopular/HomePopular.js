@@ -4,6 +4,8 @@ import MovieGrid from '../../../components/MovieGrid/MovieGrid';
 import MovieTable from '../../../components/MovieTable/MovieTable';
 import URLService from '../../../services/URL';
 import './HomePopular.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faList, faTable } from '@fortawesome/free-solid-svg-icons';
 
 function HomePopular() {
   const urlService = new URLService();
@@ -20,18 +22,18 @@ function HomePopular() {
 
   return (
     <div className="home-popular">
-      <div className="view-toggle-buttons">
+      <div className="view-toggle-container">
         <button 
           onClick={handleGridViewClick} 
           className={!isTableView ? 'active' : ''}
         >
-          Infinite Scroll
+          <FontAwesomeIcon icon={faList} title="Infinite Scroll" />
         </button>
         <button 
           onClick={handleTableViewClick} 
           className={isTableView ? 'active' : ''}
         >
-          Table View
+          <FontAwesomeIcon icon={faTable} title="Table View" />
         </button>
       </div>
       {isTableView ? (
