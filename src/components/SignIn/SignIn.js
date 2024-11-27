@@ -68,6 +68,12 @@ function SignIn() {
 
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
+
+    if (!isValidEmail(email)) {
+      toast.error('유효한 이메일 주소를 입력해주세요.');
+      return;
+    }
+
     try {
       const response = await handleLogin(email, password);
       if (response) {
