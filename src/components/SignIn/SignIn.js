@@ -70,36 +70,21 @@ function SignIn() {
     e.preventDefault();
     try {
       const response = await handleLogin(email, password);
-
-      const userId = response?.userId || response?.data?.userId || response?.data?.id || response?.id;
-      if (!userId) {
-        toast.error('로그인 실패: 사용자 정보를 확인할 수 없습니다.');
-        return;
-      }
-
-      // 로그인 성공 시 localStorage에 정보 저장
-      if (email) {
-        localStorage.setItem('userId', userId);
-        localStorage.setItem('userEmail', email);
-
+      if (response) {
+        // API 키 저장 - 환경 변수와 동일한 키 이름 사용
+        localStorage.setItem('REACT_APP_TMDB_API_KEY', password);
+        
+        // 기존 로그인 상태 유지 로직
         if (rememberMe) {
           localStorage.setItem('savedEmail', email);
           localStorage.setItem('savedPassword', password);
           localStorage.setItem('rememberMe', 'true');
-        } else {
-          localStorage.removeItem('savedEmail');
-          localStorage.removeItem('savedPassword');
-          localStorage.removeItem('rememberMe');
         }
-
-        toast.success('로그인에 성공했습니다!');
-        setTimeout(() => {
-          navigate('/');
-        }, 100);
+        toast.success('로그인 성공!');
+        navigate('/');
       }
     } catch (err) {
-      console.error('로그인 오류:', err);
-      toast.error(err.message || '로그인에 실패했습니다.');
+      toast.error('로그인 실패');
     }
   };
 
@@ -133,17 +118,27 @@ function SignIn() {
 
   const handleRegisterSubmit = async (e) => {
     e.preventDefault();
-    if (!isRegisterFormValid) {
-      toast.error('모든 필드를 올바르게 입력해주세요.');
+    
+    // 이메일 유효성 검사
+    if (!isValidEmail(registerEmail)) {
+      toast.error('유효한 이메일 주소를 입력해주세요.');
       return;
     }
+
+    // API 키 형식 검사 (TMDB API 키는 32자리)
+    if (registerPassword.length !== 32) {
+      toast.error('올바른 TMDB API 키를 입력해주세요.');
+      return;
+    }
+
     try {
       await handleRegister(registerEmail, registerPassword);
+      localStorage.setItem('TMDb-Key', registerPassword); // API 키 저장
       toast.success('회원가입에 성공했습니다! 로그인 해주세요.');
       toggleCard();
     } catch (err) {
       console.error('회원가입 오류:', err);
-      toast.error(err.message || '회원가입에 실패했습니다.');
+      toast.error('회원가입에 실패했습니다.');
     }
   };
 
@@ -169,6 +164,12 @@ function SignIn() {
   const handleTermsAgree = () => {
     setAcceptTerms(true);
     setShowTerms(false);
+  };
+
+  // 이메일 유효성 검사 함수 추가 (기존 코드 바로 아래에 추가)
+  const isValidEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
   };
 
   return (
@@ -200,7 +201,7 @@ function SignIn() {
                     onChange={(e) => setPassword(e.target.value)}
                     required
                   />
-                  <label htmlFor="password">비밀번호</label>
+                  <label htmlFor="password">비밀번호(TMDB API KEY)</label>
                 </div>
                 <span className="checkbox remember">
                   <input
@@ -245,7 +246,7 @@ function SignIn() {
                     onChange={(e) => setRegisterPassword(e.target.value)}
                     required
                   />
-                  <label htmlFor="register-password">비밀번호</label>
+                  <label htmlFor="register-password">비밀번호(TMDB API KEY)</label>
                 </div>
                 <div className="input">
                   <input
@@ -256,7 +257,7 @@ function SignIn() {
                     onChange={(e) => setConfirmPassword(e.target.value)}
                     required
                   />
-                  <label htmlFor="confirm-password">비밀번호 확인</label>
+                  <label htmlFor="confirm-password">비밀번호(TMDB API KEY)확인</label>
                 </div>
                 <div className="checkbox-wrapper">
                   <input

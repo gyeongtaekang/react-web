@@ -124,14 +124,55 @@
 .pagination-controls {
   display: flex;
   justify-content: center;
-  gap: 5px;
+  align-items: center;
+  gap: 8px;
+  margin: 20px 0;
 }
 
 .pagination-controls button {
-  padding: 5px;
-  font-size: 0.9em;
+  width: 30px;  /* 버튼 너비 고정 */
+  height: 30px; /* 버튼 높이 고정 */
+  padding: 0;   /* 패딩 제거 */
+  font-size: 0.9rem;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: #333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-  width: auto; /* 버튼의 너비를 글자 크기만큼 조정 */
+.pagination-controls button:disabled {
+  color: #ccc;
+  cursor: not-allowed;
+}
+
+.pagination-controls span {
+  font-size: 0.9rem;
+}
+
+.pagination-controls button:hover:not(:disabled) {
+  color: #007bff;
+}
+
+.page-number {
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.page-number.active {
+  background-color: #007bff;
+  color: white;
+}
+
+.page-number.dots {
+  cursor: default;
+}
+
+.page-number:not(.dots):hover {
+  background-color: #e9ecef;
 }
 
 /* 별점 스타일 */

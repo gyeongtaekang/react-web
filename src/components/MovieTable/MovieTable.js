@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { FaStar } from 'react-icons/fa';
 import URLService from '../../services/URL';
 import './MovieTable.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 
 const genreMap = {
   28: '액션',
@@ -30,11 +32,35 @@ const getGenreNames = (genreIds) => {
   return genreIds.map(id => genreMap[id] || id).join(', ');
 };
 
+const createPageNumbers = (currentPage, totalPages) => {
+  let pages = [];
+  const DOTS = '...';
+  
+  if (totalPages <= 7) {
+    // 7페이지 이하면 모든 페이지 표시
+    return Array.from({ length: totalPages }, (_, i) => i + 1);
+  }
+
+  if (currentPage <= 3) {
+    // 현재 페이지가 앞쪽일 때
+    pages = [1, 2, 3, 4, DOTS, totalPages];
+  } else if (currentPage >= totalPages - 2) {
+    // 현재 페이지가 뒤쪽일 때
+    pages = [1, DOTS, totalPages - 3, totalPages - 2, totalPages - 1, totalPages];
+  } else {
+    // 현재 페이지가 중간일 때
+    pages = [1, DOTS, currentPage - 1, currentPage, currentPage + 1, DOTS, totalPages];
+  }
+
+  return pages;
+};
+
 function MovieTable({ fetchUrl }) {
   const urlService = new URLService();
   const [movies, setMovies] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const moviesPerPage = 10;
+  const totalPages = 10; // Assuming total pages is 10 for now
 
   useEffect(() => {
     const fetchMovies = async () => {
@@ -91,12 +117,19 @@ function MovieTable({ fetchUrl }) {
         </tbody>
       </table>
       <div className="pagination-controls">
-        <button onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}>
-          이전
+        <button onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))} disabled={currentPage === 1}>
+          <FontAwesomeIcon icon={faChevronLeft} />
         </button>
-        <span>Page {currentPage}</span>
-        <button onClick={() => setCurrentPage(prev => prev + 1)}>
-          다음
+        {createPageNumbers(currentPage, totalPages).map((page, index) => (
+          <span key={index} 
+            className={`page-number ${page === currentPage ? 'active' : ''} ${page === '...' ? 'dots' : ''}`}
+            onClick={() => page !== '...' && setCurrentPage(page)}
+          >
+            {page}
+          </span>
+        ))}
+        <button onClick={() => setCurrentPage(prev => prev + 1)} disabled={currentPage === totalPages}>
+          <FontAwesomeIcon icon={faChevronRight} />
         </button>
       </div>
     </div>
