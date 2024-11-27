@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import useFetch from '../../services/useFetch';
 import URLService from '../../services/URL';
+import MovieModal from '../MovieModal/MovieModal';
 
 function HomeMiddle({ title, fetchUrl }) {
   const { data, loading, error } = useFetch(fetchUrl);
   const [movies, setMovies] = useState([]);
   const [genres, setGenres] = useState({});
+  const [selectedMovie, setSelectedMovie] = useState(null);
 
   const urlService = new URLService();
 
@@ -62,22 +64,24 @@ function HomeMiddle({ title, fetchUrl }) {
           <div
             key={movie.id}
             className="movie-card cursor-pointer overflow-hidden rounded-lg relative transform transition-transform duration-300 hover:scale-105"
+            onClick={() => setSelectedMovie(movie)}
           >
             <img
               src={getImageUrl(movie.poster_path)}
               alt={movie.title}
               className="w-full h-full object-cover"
             />
-            <div className="movie-overlay absolute inset-0 bg-black bg-opacity-80 text-white opacity-0 transition-opacity duration-300 hover:opacity-100 flex flex-col justify-center items-center p-4">
-              <h3 className="text-lg font-semibold mb-2">{movie.title}</h3>
-              <p className="text-sm mb-1">{movie.overview}</p>
-              <p className="text-sm">평점: {movie.vote_average}</p>
-              <p className="text-sm">개봉일: {movie.release_date}</p>
-              <p className="text-sm">장르: {movie.genre_ids.map(id => genres[id]).join(', ')}</p>
-            </div>
           </div>
         ))}
       </div>
+      
+      {selectedMovie && (
+        <MovieModal 
+          movie={selectedMovie}
+          genres={genres}
+          onClose={() => setSelectedMovie(null)}
+        />
+      )}
     </div>
   );
 }
