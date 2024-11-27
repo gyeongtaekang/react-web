@@ -185,119 +185,235 @@ function SignIn() {
         <div id="phone" className={isLoginVisible ? 'login-active' : 'register-active'}>
           <div id="content-wrapper">
             <div className="card" id="login">
-              <form onSubmit={handleLoginSubmit}>
-                <h1>로그인</h1>
-                <div className="input">
-                  <input
-                    id="email"
-                    type="email"
-                    value={email}
-                    name="email"
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                  />
-                  <label htmlFor="email">이메일 주소</label>
+              {/* 로그인 헤더 */}
+              <div className="text-center mb-2"> {/* mb-8에서 mb-4로 변경 */}
+                <h2 className="text-3xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent mb-4">
+                  로그인
+                </h2>
+                <div className="flex flex-col items-center space-y-2"> {/* space-y-4에서 space-y-2로 변경 */}
+                  <span className="text-gray-500 text-sm">아직 계정이 없으신가요?</span>
+                  <button
+                    type="button"
+                    onClick={toggleCard}
+                    className="w-full max-w-xs bg-gradient-to-r from-indigo-600 to-purple-600 
+                               text-white py-2 px-4 rounded-lg font-medium 
+                               hover:from-indigo-700 hover:to-purple-700 
+                               transform transition-all duration-200 hover:scale-[1.02] 
+                               active:scale-[0.98] shadow-lg hover:shadow-xl"
+                  >
+                    회원가입하기
+                  </button>
                 </div>
-                <div className="input">
-                  <input
-                    id="password"
-                    type="password"
-                    value={password}
-                    name="password"
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                  />
-                  <label htmlFor="password">비밀번호(TMDB API KEY)</label>
+              </div>
+
+              <form onSubmit={handleLoginSubmit} className="w-full max-w-md mx-auto p-8 space-y-6">
+                <div className="space-y-4">
+                  <div className="relative">
+                    <input
+                      id="email"
+                      type="email"
+                      value={email}
+                      name="email"
+                      onChange={(e) => setEmail(e.target.value)}
+                      required
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200 bg-gray-50 hover:bg-white"
+                      placeholder=" "
+                    />
+                    <label 
+                      htmlFor="email"
+                      className="absolute left-4 -top-2.5 bg-white px-1 text-sm text-gray-600 transition-all duration-200"
+                    >
+                      이메일 주소
+                    </label>
+                  </div>
+
+                  <div className="relative">
+                    <input
+                      id="password"
+                      type="password"
+                      value={password}
+                      name="password"
+                      onChange={(e) => setPassword(e.target.value)}
+                      required
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200 bg-gray-50 hover:bg-white"
+                      placeholder=" "
+                    />
+                    <label 
+                      htmlFor="password"
+                      className="absolute left-4 -top-2.5 bg-white px-1 text-sm text-gray-600 transition-all duration-200"
+                    >
+                      비밀번호(TMDB API KEY)
+                    </label>
+                  </div>
                 </div>
-                <span className="checkbox remember">
-                  <input
-                    type="checkbox"
-                    id="remember"
-                    checked={rememberMe}
-                    name="rememberMe"
-                    onChange={(e) => setRememberMe(e.target.checked)}
-                  />
-                  <label htmlFor="remember" className="read-text">
-                    로그인 상태 유지
+
+                <div className="flex items-center justify-between">
+                  <label className="flex items-center space-x-2 cursor-pointer group">
+                    <input
+                      type="checkbox"
+                      id="remember"
+                      checked={rememberMe}
+                      onChange={(e) => setRememberMe(e.target.checked)}
+                      className="w-4 h-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 transition-colors duration-200"
+                    />
+                    <span className="text-sm text-gray-600 group-hover:text-gray-900 transition-colors duration-200">
+                      로그인 상태 유지
+                    </span>
                   </label>
-                </span>
-                <button type="submit" disabled={!isLoginFormValid || loading}>
-                  {loading ? '로그인 중...' : '로그인'}
+                </div>
+
+                <button
+                  type="submit"
+                  className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-3 rounded-lg font-medium 
+                          hover:from-indigo-700 hover:to-purple-700 
+                          focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500
+                          transform transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]
+                          disabled:opacity-50 disabled:cursor-not-allowed
+                          shadow-lg hover:shadow-xl"
+                  disabled={loading}
+                >
+                  {loading ? (
+                    <div className="flex items-center justify-center">
+                      <svg className="animate-spin h-5 w-5 mr-3" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                      </svg>
+                      로그인 중...
+                    </div>
+                  ) : (
+                    '로그인'
+                  )}
                 </button>
               </form>
-              <button type="button" className="account-check" onClick={toggleCard}>
-                계정이 없으신가요? <b>회원가입</b>
-              </button>
             </div>
             <div className="card" id="register">
-              <form onSubmit={handleRegisterSubmit}>
-                <h1>회원가입</h1>
-                <div className="input">
-                  <input
-                    id="register-email"
-                    type="email"
-                    value={registerEmail}
-                    name="registerEmail"
-                    onChange={(e) => setRegisterEmail(e.target.value)}
-                    required
-                  />
-                  <label htmlFor="register-email">이메일 주소</label>
+              <div className="text-center mb-8">
+                <h2 className="text-3xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent mb-6">
+                  회원가입
+                </h2>
+              </div>
+              
+              <form onSubmit={handleRegisterSubmit} className="space-y-6">
+                <div className="space-y-3">
+                  <div className="relative">
+                    <input
+                      id="register-email"
+                      type="email"
+                      value={registerEmail}
+                      name="registerEmail"
+                      onChange={(e) => setRegisterEmail(e.target.value)}
+                      required
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg 
+                               focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent 
+                               transition-all duration-200 bg-gray-50 hover:bg-white text-black"
+                    />
+                    <label 
+                      htmlFor="register-email"
+                      className="absolute left-4 -top-2.5 bg-white px-1 text-sm text-gray-600 transition-all duration-200"
+                    >
+                      이메일 주소
+                    </label>
+                  </div>
+        
+                  <div className="relative">
+                    <input
+                      id="register-password"
+                      type="password"
+                      value={registerPassword}
+                      name="registerPassword"
+                      onChange={(e) => setRegisterPassword(e.target.value)}
+                      required
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg 
+                               focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent 
+                               transition-all duration-200 bg-gray-50 hover:bg-white text-black"
+                    />
+                    <label 
+                      htmlFor="register-password"
+                      className="absolute left-4 -top-2.5 bg-white px-1 text-sm text-gray-600 transition-all duration-200"
+                    >
+                      비밀번호(TMDB API KEY)
+                    </label>
+                  </div>
+        
+                  <div className="relative">
+                    <input
+                      id="confirm-password"
+                      type="password"
+                      value={confirmPassword}
+                      name="confirmPassword"
+                      onChange={(e) => setConfirmPassword(e.target.value)}
+                      required
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg 
+                               focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent 
+                               transition-all duration-200 bg-gray-50 hover:bg-white text-black"
+                    />
+                    <label 
+                      htmlFor="confirm-password"
+                      className="absolute left-4 -top-2.5 bg-white px-1 text-sm text-gray-600 transition-all duration-200"
+                    >
+                      비밀번호(TMDB API KEY) 확인
+                    </label>
+                  </div>
                 </div>
-                <div className="input">
-                  <input
-                    id="register-password"
-                    type="password"
-                    value={registerPassword}
-                    name="registerPassword"
-                    onChange={(e) => setRegisterPassword(e.target.value)}
-                    required
-                  />
-                  <label htmlFor="register-password">비밀번호(TMDB API KEY)</label>
-                </div>
-                <div className="input">
-                  <input
-                    id="confirm-password"
-                    type="password"
-                    value={confirmPassword}
-                    name="confirmPassword"
-                    onChange={(e) => setConfirmPassword(e.target.value)}
-                    required
-                  />
-                  <label htmlFor="confirm-password">비밀번호(TMDB API KEY)확인</label>
-                </div>
-                <div className="checkbox-wrapper">
+        
+                <div className="flex items-center space-x-2">
                   <input
                     type="checkbox"
                     id="terms"
                     checked={acceptTerms}
                     onChange={() => setShowTerms(true)}
+                    className="w-4 h-4 rounded border-gray-300 text-indigo-600 
+                             focus:ring-indigo-500 transition-colors duration-200"
                   />
                   <label 
                     htmlFor="terms" 
-                    className="read-text"
+                    className="text-sm text-gray-600 hover:text-gray-900 transition-colors duration-200 cursor-pointer"
                     onClick={handleTermsClick}
-                    style={{ cursor: 'pointer' }}
                   >
-                    <b>이용 약관</b>에 동의합니다
+                    <b className="text-indigo-600">이용 약관</b>에 동의합니다
                   </label>
                 </div>
-                <button type="submit" disabled={!isRegisterFormValid || loading}>
+        
+                <button
+                  type="submit"
+                  disabled={!isRegisterFormValid || loading}
+                  className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 
+                           text-white py-2 rounded-lg font-medium 
+                           hover:from-indigo-700 hover:to-purple-700 
+                           transform transition-all duration-200 hover:scale-[1.02] 
+                           active:scale-[0.98] shadow-lg hover:shadow-xl
+                           disabled:opacity-50 disabled:cursor-not-allowed"
+                >
                   {loading ? '등록 중...' : '회원가입'}
                 </button>
               </form>
-              <button type="button" className="account-check" onClick={toggleCard}>
-                이미 계정이 있으신가요? <b>로그인</b>
-              </button>
+        
+              <div className="text-center mt-4"> {/* 간격을 좁히기 위해 mt-6에서 mt-4로 변경 */}
+                <button
+                  type="button"
+                  onClick={toggleCard}
+                  className="w-full max-w-xs bg-gradient-to-r from-indigo-600 to-purple-600 
+                             text-white py-2 px-4 rounded-lg font-medium 
+                             hover:from-indigo-700 hover:to-purple-700 
+                             transform transition-all duration-200 hover:scale-[1.02] 
+                             active:scale-[0.98] shadow-lg hover:shadow-xl mx-auto"
+                >
+                  이미 계정이 있으신가요? <b>로그인</b>
+                </button>
+              </div>
             </div>
           </div>
         </div>
       </div>
       <TermsModal 
         show={showTerms}
-        onHide={() => setShowTerms(false)}
-        onAgree={() => {
-          setAcceptTerms(true);
+        onHide={() => {
           setShowTerms(false);
+          setAcceptTerms(false); // 취소 버튼 클릭 시 체크박스 해제
+        }}
+        onAgree={() => {
+          setShowTerms(false);
+          setAcceptTerms(true); // 동의 버튼 클릭 시 체크박스 체크
         }}
       />
       <ToastContainer />
@@ -306,3 +422,12 @@ function SignIn() {
 }
 
 export default SignIn;
+
+<style jsx>{`
+  .card {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 2rem;
+    overflow: hidden;
+  }
+`}</style>

@@ -179,3 +179,12 @@ h1 {
   height: 100%; /* 부모 요소 기준 높이 */
   margin: 0; /* 기본 여백 제거 */
 }
+
+/* SignIn.css */
+input {
+  color: #000000 !important;
+}
+
+input::placeholder {
+  color: #666666 !important;
+}
